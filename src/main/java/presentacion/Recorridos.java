@@ -30,19 +30,19 @@ public class Recorridos extends javax.swing.JFrame {
 
     private final Grafo grafoLogico = ControladorGrafo.getGrafo();
     private final Graph grafoVisual = VisualizadorGrafo.crearGrafoVisual(grafoLogico);
-    private View viewerView;
 
     public Recorridos() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
-        setSize(700, 500);
+        setSize(1080, 720);
         pnlGrafo.setLayout(new BorderLayout());
-        pnlGrafo.setPreferredSize(new Dimension(500, 300));
-        pnlGrafo.setMinimumSize(new Dimension(500, 300));
+        pnlGrafo.setPreferredSize(new Dimension(1280, 720));
+        pnlGrafo.setMinimumSize(new Dimension(1280, 720));
         Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         viewer.enableAutoLayout();
         View view = viewer.addDefaultView(false);
+
         pnlGrafo.setLayout(new BorderLayout());
         pnlGrafo.add((Component) view, BorderLayout.CENTER);
         pnlGrafo.revalidate();
@@ -58,7 +58,7 @@ public class Recorridos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        pnlPrincipal = new javax.swing.JPanel();
         pnlGrafo = new javax.swing.JPanel();
         btnDFS = new javax.swing.JButton();
         btnBFS = new javax.swing.JButton();
@@ -68,7 +68,8 @@ public class Recorridos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlPrincipal.setPreferredSize(new java.awt.Dimension(1080, 720));
+        pnlPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlGrafo.setMinimumSize(new java.awt.Dimension(497, 290));
 
@@ -76,14 +77,14 @@ public class Recorridos extends javax.swing.JFrame {
         pnlGrafo.setLayout(pnlGrafoLayout);
         pnlGrafoLayout.setHorizontalGroup(
             pnlGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 497, Short.MAX_VALUE)
+            .addGap(0, 890, Short.MAX_VALUE)
         );
         pnlGrafoLayout.setVerticalGroup(
             pnlGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 290, Short.MAX_VALUE)
+            .addGap(0, 480, Short.MAX_VALUE)
         );
 
-        jPanel1.add(pnlGrafo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, -1, 290));
+        pnlPrincipal.add(pnlGrafo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 890, 480));
 
         btnDFS.setText("DFS");
         btnDFS.addActionListener(new java.awt.event.ActionListener() {
@@ -91,7 +92,7 @@ public class Recorridos extends javax.swing.JFrame {
                 btnDFSActionPerformed(evt);
             }
         });
-        jPanel1.add(btnDFS, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 360, 100, 50));
+        pnlPrincipal.add(btnDFS, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 560, 100, 50));
 
         btnBFS.setText("BFS");
         btnBFS.addActionListener(new java.awt.event.ActionListener() {
@@ -99,11 +100,11 @@ public class Recorridos extends javax.swing.JFrame {
                 btnBFSActionPerformed(evt);
             }
         });
-        jPanel1.add(btnBFS, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 360, 100, 50));
+        pnlPrincipal.add(btnBFS, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 560, 100, 50));
 
         lblRecorrido.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblRecorrido.setText("Recorridos");
-        jPanel1.add(lblRecorrido, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, -1, -1));
+        pnlPrincipal.add(lblRecorrido, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 10, -1, -1));
 
         btnVolver.setText("Volver");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
@@ -111,18 +112,18 @@ public class Recorridos extends javax.swing.JFrame {
                 btnVolverActionPerformed(evt);
             }
         });
-        jPanel1.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, -1, -1));
-        jPanel1.add(lblAlgoritmo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, 180, 20));
+        pnlPrincipal.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 630, -1, -1));
+        pnlPrincipal.add(lblAlgoritmo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 180, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addComponent(pnlPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(pnlPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -195,9 +196,9 @@ public class Recorridos extends javax.swing.JFrame {
     private javax.swing.JButton btnBFS;
     private javax.swing.JButton btnDFS;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblAlgoritmo;
     private javax.swing.JLabel lblRecorrido;
     private javax.swing.JPanel pnlGrafo;
+    private javax.swing.JPanel pnlPrincipal;
     // End of variables declaration//GEN-END:variables
 }
