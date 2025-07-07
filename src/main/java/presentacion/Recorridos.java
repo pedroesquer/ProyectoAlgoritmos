@@ -63,6 +63,7 @@ public class Recorridos extends javax.swing.JFrame {
         btnBFS = new javax.swing.JButton();
         lblRecorrido = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
+        lblAlgoritmo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,7 +102,7 @@ public class Recorridos extends javax.swing.JFrame {
 
         lblRecorrido.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblRecorrido.setText("Recorridos");
-        jPanel1.add(lblRecorrido, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 29, -1, -1));
+        jPanel1.add(lblRecorrido, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, -1, -1));
 
         btnVolver.setText("Volver");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
@@ -110,6 +111,7 @@ public class Recorridos extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, -1, -1));
+        jPanel1.add(lblAlgoritmo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, 180, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,7 +135,7 @@ public class Recorridos extends javax.swing.JFrame {
     private void btnBFSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBFSActionPerformed
         VisualizadorUtils.reiniciarGrafo(grafoVisual);
         String ciudadInicio = "León";
-
+        lblAlgoritmo.setText("Algoritmo en ejecución: BFS");
         Localidad origen = grafoLogico.getLocalidades().stream()
                 .filter(l -> l.getNombre().equals(ciudadInicio))
                 .findFirst()
@@ -162,6 +164,7 @@ public class Recorridos extends javax.swing.JFrame {
     private void btnDFSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDFSActionPerformed
         VisualizadorUtils.reiniciarGrafo(grafoVisual);
         String ciudadInicio = "León";
+        lblAlgoritmo.setText("Algoritmo en ejecución: DFS");
 
         Localidad origen = grafoLogico.getLocalidades().stream()
                 .filter(l -> l.getNombre().equals(ciudadInicio))
@@ -193,6 +196,7 @@ public class Recorridos extends javax.swing.JFrame {
     private javax.swing.JButton btnDFS;
     private javax.swing.JButton btnVolver;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblAlgoritmo;
     private javax.swing.JLabel lblRecorrido;
     private javax.swing.JPanel pnlGrafo;
     // End of variables declaration//GEN-END:variables
