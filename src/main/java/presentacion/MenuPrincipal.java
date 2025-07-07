@@ -4,6 +4,8 @@
  */
 package presentacion;
 
+import negocio.ControladorVisual;
+
 /**
  *
  * @author pedro
@@ -15,7 +17,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     public MenuPrincipal() {
         initComponents();
-        setSize(700,500);
+        setSize(700, 500);
         setLocationRelativeTo(null);
         setResizable(false);
     }
@@ -32,11 +34,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         Panel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        btnRecorridos = new javax.swing.JButton();
+        btnArbol = new javax.swing.JButton();
+        btnRutaMasCorta = new javax.swing.JButton();
+        btnReporteComplejidad = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -48,20 +51,47 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabel2.setText("Guanajuato");
         Panel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, -1, -1));
 
-        jButton2.setText("2.  Recorridos");
-        Panel.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, 120, 40));
+        btnRecorridos.setText("1.  Recorridos");
+        btnRecorridos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecorridosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnRecorridos);
 
-        jButton3.setText("3. Arbol de Expansión Mínima");
-        Panel.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 190, 40));
+        btnArbol.setText("2. Arbol de Expansión Mínima");
+        btnArbol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArbolActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnArbol);
 
-        jButton4.setText("4. Rutas más cortas");
-        Panel.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, 140, 40));
+        btnRutaMasCorta.setText("3. Rutas más cortas");
+        btnRutaMasCorta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRutaMasCortaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnRutaMasCorta);
 
-        jButton5.setText("5. Reportes de complejidad");
-        Panel.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 190, 40));
+        btnReporteComplejidad.setText("4. Reportes de complejidad");
+        btnReporteComplejidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteComplejidadActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnReporteComplejidad);
 
-        jButton6.setText("6. Salir");
-        Panel.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, 120, 40));
+        btnSalir.setText("5. Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSalir);
+
+        Panel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 220, 200));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,6 +106,28 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArbolActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnArbolActionPerformed
+
+    private void btnRutaMasCortaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRutaMasCortaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRutaMasCortaActionPerformed
+
+    private void btnReporteComplejidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteComplejidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReporteComplejidadActionPerformed
+
+    private void btnRecorridosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecorridosActionPerformed
+        ControladorVisual.getInstancia().abrirPantallaRecorridos();
+        this.setVisible(false);
+
+    }//GEN-LAST:event_btnRecorridosActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -114,12 +166,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panel;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton btnArbol;
+    private javax.swing.JButton btnRecorridos;
+    private javax.swing.JButton btnReporteComplejidad;
+    private javax.swing.JButton btnRutaMasCorta;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
