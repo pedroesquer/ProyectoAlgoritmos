@@ -5,11 +5,13 @@
 package presentacion;
 
 import algoritmos.BFS;
+import algoritmos.DFS;
 import base.Grafo;
 import base.Localidad;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import javax.swing.SwingUtilities;
 import negocio.ControladorGrafo;
 import negocio.ControladorVisual;
 import org.graphstream.graph.Graph;
@@ -27,7 +29,6 @@ import org.graphstream.ui.view.Viewer;
 public class Recorridos extends javax.swing.JFrame {
 
     private final Grafo grafoLogico = ControladorGrafo.getGrafo();
-
     private final Graph grafoVisual = VisualizadorGrafo.crearGrafoVisual(grafoLogico);
 
     public Recorridos() {
@@ -40,7 +41,6 @@ public class Recorridos extends javax.swing.JFrame {
         pnlGrafo.setMinimumSize(new Dimension(500, 300));
         Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         viewer.enableAutoLayout();
-
         View view = viewer.addDefaultView(false);
         pnlGrafo.setLayout(new BorderLayout());
         pnlGrafo.add((Component) view, BorderLayout.CENTER);
@@ -140,21 +140,51 @@ public class Recorridos extends javax.swing.JFrame {
                 .orElse(null);
 
         if (origen != null) {
+            btnDFS.setEnabled(false);
+            btnBFS.setEnabled(false);
             new Thread(() -> {
                 try {
-                    Thread.sleep(4000); // Dale tiempo al layout pa que se disperse
+                    Thread.sleep(500);
+                    BFS.ejecutar(grafoLogico, origen, grafoVisual);
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
+                } finally {
 
-                BFS.ejecutar(grafoLogico, origen, grafoVisual);
+                    SwingUtilities.invokeLater(() -> btnDFS.setEnabled(true));
+                    SwingUtilities.invokeLater(() -> btnBFS.setEnabled(true));
+
+                }
             }).start();
         }
      }//GEN-LAST:event_btnBFSActionPerformed
 
     private void btnDFSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDFSActionPerformed
         VisualizadorUtils.reiniciarGrafo(grafoVisual);
+        String ciudadInicio = "León";
 
+        Localidad origen = grafoLogico.getLocalidades().stream()
+                .filter(l -> l.getNombre().equals(ciudadInicio))
+                .findFirst()
+                .orElse(null);
+
+        if (origen != null) {
+            btnDFS.setEnabled(false);
+            btnBFS.setEnabled(false);
+            new Thread(() -> {
+                try {
+                    Thread.sleep(500);
+                    DFS.ejecutar(grafoLogico, origen, grafoVisual);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    SwingUtilities.invokeLater(() -> btnDFS.setEnabled(true));
+                    SwingUtilities.invokeLater(() -> btnBFS.setEnabled(true));
+
+                }
+            }).start();
+        }
     }//GEN-LAST:event_btnDFSActionPerformed
 
 

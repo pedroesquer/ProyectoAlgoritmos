@@ -48,4 +48,6 @@ public class Grafo {
     public List<Localidad> obtenerVecinos(Localidad loc) {
         return adyacencias.getOrDefault(loc, Collections.emptyList());
     }
+    
+    
 }

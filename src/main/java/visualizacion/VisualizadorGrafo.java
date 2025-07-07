@@ -34,11 +34,9 @@ public class VisualizadorGrafo {
             if (graph.getNode(loc.getNombre()) == null) {
                 Node nodo = graph.addNode(loc.getNombre());
                 nodo.setAttribute("ui.label", loc.getNombre());
-                
 
             }
         }
-
         // Aristas
         for (Carretera arista : grafo.getCarreteras()) {
             String origen = arista.getOrigen().getNombre();

@@ -56,7 +56,7 @@ public class BFS {
                     VisualizadorUtils.pintarArista(grafoVisual, actual.getNombre(), vecino.getNombre(), "seleccionada");
 
                     try {
-                        Thread.sleep(400); // Animación
+                        Thread.sleep(500); // Animación
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
