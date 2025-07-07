@@ -4,6 +4,7 @@ import presentacion.PantallaKruskal;
 import presentacion.Menu2;
 import presentacion.MenuMST;
 import presentacion.MenuPrincipal;
+import presentacion.MenuRutaCorta;
 import presentacion.Recorridos;
 
 /**
@@ -42,6 +43,11 @@ public class ControladorVisual {
     public void abrirPantallaKruskal(){
         PantallaKruskal kruskal = new PantallaKruskal();
         kruskal.setVisible(true);
+    }
+    
+    public void abrirRutaMasCorta(){
+        MenuRutaCorta rc = new MenuRutaCorta();
+        rc.setVisible(true);
     }
     
     

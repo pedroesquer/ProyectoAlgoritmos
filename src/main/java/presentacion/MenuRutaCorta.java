@@ -8,14 +8,14 @@ import negocio.ControladorVisual;
 
 /**
  *
- * @author katia
+ * @author Chris
  */
-public class MenuMST extends javax.swing.JFrame {
+public class MenuRutaCorta extends javax.swing.JFrame {
 
     /**
      * Creates new form MenuMST
      */
-    public MenuMST() {
+    public MenuRutaCorta() {
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -30,33 +30,32 @@ public class MenuMST extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        btnKruskal = new javax.swing.JButton();
-        btnPrim = new javax.swing.JButton();
-        btnBoruvka = new javax.swing.JButton();
+        btnBellman = new javax.swing.JButton();
+        btnDijkstra = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(700, 500));
         setMinimumSize(new java.awt.Dimension(700, 500));
-        setPreferredSize(new java.awt.Dimension(700, 500));
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Ebrima", 1, 45)); // NOI18N
-        jLabel1.setText("Árbol de Expansión Mínima");
+        jLabel1.setText("Rutas más cortas");
 
-        btnKruskal.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
-        btnKruskal.setText("Kruskal");
-        btnKruskal.addActionListener(new java.awt.event.ActionListener() {
+        btnBellman.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
+        btnBellman.setText("Bellman–Ford");
+        btnBellman.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKruskalActionPerformed(evt);
+                btnBellmanActionPerformed(evt);
             }
         });
 
-        btnPrim.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
-        btnPrim.setText("Prim");
-
-        btnBoruvka.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
-        btnBoruvka.setText("Boruvka ");
+        btnDijkstra.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
+        btnDijkstra.setText("Dijkstra");
+        btnDijkstra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDijkstraActionPerformed(evt);
+            }
+        });
 
         btnVolver.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnVolver.setText("Volver");
@@ -73,29 +72,26 @@ public class MenuMST extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(214, 214, 214)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnPrim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnKruskal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnBoruvka, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-                            .addComponent(btnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(66, Short.MAX_VALUE))
+                            .addComponent(btnDijkstra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBellman, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                            .addComponent(btnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(157, 157, 157)
+                        .addComponent(jLabel1)))
+                .addContainerGap(188, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(31, 31, 31)
                 .addComponent(jLabel1)
-                .addGap(38, 38, 38)
-                .addComponent(btnKruskal)
-                .addGap(38, 38, 38)
-                .addComponent(btnPrim)
-                .addGap(36, 36, 36)
-                .addComponent(btnBoruvka)
-                .addGap(46, 46, 46)
+                .addGap(70, 70, 70)
+                .addComponent(btnBellman)
+                .addGap(58, 58, 58)
+                .addComponent(btnDijkstra)
+                .addGap(68, 68, 68)
                 .addComponent(btnVolver)
                 .addContainerGap(97, Short.MAX_VALUE))
         );
@@ -103,22 +99,23 @@ public class MenuMST extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnKruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKruskalActionPerformed
+    private void btnBellmanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBellmanActionPerformed
         ControladorVisual.getInstancia().abrirPantallaKruskal();
         this.setVisible(false);
-    }//GEN-LAST:event_btnKruskalActionPerformed
+    }//GEN-LAST:event_btnBellmanActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         ControladorVisual.getInstancia().menuPrincipalVisible();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private void btnDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDijkstraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDijkstraActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBoruvka;
-    private javax.swing.JButton btnKruskal;
-    private javax.swing.JButton btnPrim;
+    private javax.swing.JButton btnBellman;
+    private javax.swing.JButton btnDijkstra;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables

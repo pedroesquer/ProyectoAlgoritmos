@@ -28,8 +28,8 @@ import org.graphstream.ui.view.Viewer;
  */
 public class Recorridos extends javax.swing.JFrame {
 
-    private Grafo grafoLogico;
-    private Graph grafoVisual;
+    private final Grafo grafoLogico = ControladorGrafo.getGrafo();
+    private final Graph grafoVisual = VisualizadorGrafo.crearGrafoVisual(grafoLogico);
     private View viewerView;
 
     public Recorridos() {

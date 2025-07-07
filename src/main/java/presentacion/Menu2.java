@@ -61,6 +61,11 @@ public class Menu2 extends javax.swing.JFrame {
 
         btnRutas.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
         btnRutas.setText("3. Rutas más cortas.");
+        btnRutas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRutasActionPerformed(evt);
+            }
+        });
 
         btnReportes.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
         btnReportes.setText("4. Reportes de complejidad.");
@@ -125,6 +130,11 @@ public class Menu2 extends javax.swing.JFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnRutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRutasActionPerformed
+        ControladorVisual.getInstancia().abrirRutaMasCorta();
+        this.dispose();
+    }//GEN-LAST:event_btnRutasActionPerformed
 
     /**
      * @param args the command line arguments
