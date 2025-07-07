@@ -8,6 +8,7 @@ import base.Carretera;
 import base.Grafo;
 import base.Localidad;
 import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
 
 /**
@@ -15,8 +16,10 @@ import org.graphstream.graph.implementations.SingleGraph;
  * @author pedro
  */
 public class VisualizadorGrafo {
+
     /**
      * Convierte un grafo lógico en un grafo visual de GraphStream.
+     *
      * @param grafo El grafo lógico (localidades y aristas).
      * @return El grafo visual listo para usarse en un JPanel.
      */
@@ -29,10 +32,11 @@ public class VisualizadorGrafo {
         // Nodos
         for (Localidad loc : grafo.getLocalidades()) {
             if (graph.getNode(loc.getNombre()) == null) {
-                graph.addNode(loc.getNombre()).setAttribute("ui.label", loc.getNombre());
+                Node nodo = graph.addNode(loc.getNombre());
+                nodo.setAttribute("ui.label", loc.getNombre());
+
             }
         }
-
         // Aristas
         for (Carretera arista : grafo.getCarreteras()) {
             String origen = arista.getOrigen().getNombre();
@@ -42,7 +46,7 @@ public class VisualizadorGrafo {
 
             if (graph.getEdge(id) == null && graph.getEdge(idInv) == null) {
                 graph.addEdge(id, origen, destino, false)
-                     .setAttribute("ui.label", arista.getPeso() + " km");
+                        .setAttribute("ui.label", arista.getPeso() + " km");
             }
         }
 
@@ -51,35 +55,37 @@ public class VisualizadorGrafo {
 
     /**
      * Devuelve el stylesheet para aplicar estilos visuales a nodos y aristas.
+     *
      * @return String de estilo GraphStream tipo CSS.
      */
     public static String getEstilosDefault() {
         return """
-            node {
-                fill-color: #66ccff;
-                size: 20px;
-                text-size: 14px;
-                text-color: black;
-                text-alignment: center;
-            }
-            node.visitado {
-                fill-color: #00cc66;
-            }
-            node.origen {
-                fill-color: orange;
-            }
-            node.destino {
-                fill-color: yellow;
-            }
-            edge {
-                fill-color: gray;
-                text-size: 12px;
-                size: 1px;
-            }
-            edge.seleccionada {
-                fill-color: red;
-                size: 3px;
-            }
-        """;
+    node {
+        fill-color: #66ccff;
+        size: 20px;
+        text-size: 13px;
+        text-color: black;
+        text-alignment: under;
+    }
+    node.visitado {
+        fill-color: #00cc66;
+    }
+    node.origen {
+        fill-color: orange;
+    }
+    node.destino {
+        fill-color: yellow;
+    }
+    edge {
+        fill-color: gray;
+        text-size: 10px;
+        size: 4px;
+    }
+    edge.seleccionada {
+        fill-color: red;
+        size: 5px;
+    }
+""";
+
     }
 }

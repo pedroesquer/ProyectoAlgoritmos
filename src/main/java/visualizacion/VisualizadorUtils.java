@@ -1,6 +1,8 @@
 package visualizacion;
 
+import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
 
 /**
  *
@@ -43,6 +45,27 @@ public class VisualizadorUtils {
             graph.getEdge(id2).setAttribute("ui.class", estilo);
         }
     }
+
+//    public static void reiniciarGrafo(Graph graph) {
+//        for (org.graphstream.graph.Node n : graph.getNodeSet()) {
+//            n.setAttribute("ui.class", "");
+//        }
+//
+//        for (org.graphstream.graph.Edge e : graph.getEdgeSet()) {
+//            e.setAttribute("ui.class", "");
+//        }
+//    }
+    
+    public static void reiniciarGrafo(Graph graph) {
+        if (graph.getNodeCount() == 0 || graph.getEdgeCount() == 0) return;
+        for (Node n : graph) {
+            n.setAttribute("ui.class", "");
+        }
+        for (Edge e : graph.getEdgeSet()) {
+            e.setAttribute("ui.class", "");
+        }
+    }
+
 
     public static String getEstilosDefault() {
         return """

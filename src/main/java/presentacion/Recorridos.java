@@ -5,10 +5,12 @@
 package presentacion;
 
 import algoritmos.BFS;
+import algoritmos.DFS;
 import base.Grafo;
 import base.Localidad;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import javax.swing.SwingUtilities;
 import negocio.ControladorGrafo;
 import negocio.ControladorVisual;
@@ -18,6 +20,7 @@ import org.graphstream.ui.view.Viewer;
 import resultados.ResultadoBFS;
 import visualizacion.VisualizadorGrafo;
 import visualizacion.VisualizadorUtils;
+import org.graphstream.ui.view.Viewer;
 
 /**
  *
@@ -34,22 +37,15 @@ public class Recorridos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setSize(700, 500);
-
-        grafoLogico = ControladorGrafo.getGrafo();
-
-        this.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                grafoVisual = VisualizadorGrafo.crearGrafoVisual(grafoLogico);
-                Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-                viewer.enableAutoLayout();
-                View view = viewer.addDefaultView(false);
-
-                pnlGrafo.setLayout(new BorderLayout());
-                pnlGrafo.add((Component) view, BorderLayout.CENTER);
-                pnlGrafo.revalidate();
-            }
-        });
+        pnlGrafo.setLayout(new BorderLayout());
+        pnlGrafo.setPreferredSize(new Dimension(500, 300));
+        pnlGrafo.setMinimumSize(new Dimension(500, 300));
+        Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        viewer.enableAutoLayout();
+        View view = viewer.addDefaultView(false);
+        pnlGrafo.setLayout(new BorderLayout());
+        pnlGrafo.add((Component) view, BorderLayout.CENTER);
+        pnlGrafo.revalidate();
 
     }
 
@@ -68,6 +64,7 @@ public class Recorridos extends javax.swing.JFrame {
         btnBFS = new javax.swing.JButton();
         lblRecorrido = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
+        lblAlgoritmo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,6 +86,11 @@ public class Recorridos extends javax.swing.JFrame {
         jPanel1.add(pnlGrafo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, -1, 290));
 
         btnDFS.setText("DFS");
+        btnDFS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDFSActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnDFS, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 360, 100, 50));
 
         btnBFS.setText("BFS");
@@ -101,7 +103,7 @@ public class Recorridos extends javax.swing.JFrame {
 
         lblRecorrido.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblRecorrido.setText("Recorridos");
-        jPanel1.add(lblRecorrido, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 29, -1, -1));
+        jPanel1.add(lblRecorrido, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, -1, -1));
 
         btnVolver.setText("Volver");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +111,8 @@ public class Recorridos extends javax.swing.JFrame {
                 btnVolverActionPerformed(evt);
             }
         });
-        jPanel1.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 450, -1, -1));
+        jPanel1.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, -1, -1));
+        jPanel1.add(lblAlgoritmo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, 180, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,32 +134,69 @@ public class Recorridos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnBFSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBFSActionPerformed
-        String ciudadInicio = "León"; // Puedes personalizar esto si usas un combo después
-
-        // Buscar la Localidad correspondiente
+        VisualizadorUtils.reiniciarGrafo(grafoVisual);
+        String ciudadInicio = "León";
+        lblAlgoritmo.setText("Algoritmo en ejecución: BFS");
         Localidad origen = grafoLogico.getLocalidades().stream()
                 .filter(l -> l.getNombre().equals(ciudadInicio))
                 .findFirst()
                 .orElse(null);
 
         if (origen != null) {
-            ResultadoBFS resultado = BFS.ejecutar(grafoLogico, origen, grafoVisual);
+            btnDFS.setEnabled(false);
+            btnBFS.setEnabled(false);
+            new Thread(() -> {
+                try {
+                    Thread.sleep(500);
+                    BFS.ejecutar(grafoLogico, origen, grafoVisual);
 
-            for (var entrada : resultado.getPredecesores().entrySet()) {
-                Localidad hijo = entrada.getKey();
-                Localidad padre = entrada.getValue();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
 
-                VisualizadorUtils.pintarNodo(grafoVisual, hijo.getNombre(), "visitado");
-                VisualizadorUtils.pintarArista(grafoVisual, padre.getNombre(), hijo.getNombre(), "seleccionada");
-            }
-        }    }//GEN-LAST:event_btnBFSActionPerformed
+                    SwingUtilities.invokeLater(() -> btnDFS.setEnabled(true));
+                    SwingUtilities.invokeLater(() -> btnBFS.setEnabled(true));
 
+                }
+            }).start();
+        }
+     }//GEN-LAST:event_btnBFSActionPerformed
+
+    private void btnDFSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDFSActionPerformed
+        VisualizadorUtils.reiniciarGrafo(grafoVisual);
+        String ciudadInicio = "León";
+        lblAlgoritmo.setText("Algoritmo en ejecución: DFS");
+
+        Localidad origen = grafoLogico.getLocalidades().stream()
+                .filter(l -> l.getNombre().equals(ciudadInicio))
+                .findFirst()
+                .orElse(null);
+
+        if (origen != null) {
+            btnDFS.setEnabled(false);
+            btnBFS.setEnabled(false);
+            new Thread(() -> {
+                try {
+                    Thread.sleep(500);
+                    DFS.ejecutar(grafoLogico, origen, grafoVisual);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    SwingUtilities.invokeLater(() -> btnDFS.setEnabled(true));
+                    SwingUtilities.invokeLater(() -> btnBFS.setEnabled(true));
+
+                }
+            }).start();
+        }
+    }//GEN-LAST:event_btnDFSActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBFS;
     private javax.swing.JButton btnDFS;
     private javax.swing.JButton btnVolver;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblAlgoritmo;
     private javax.swing.JLabel lblRecorrido;
     private javax.swing.JPanel pnlGrafo;
     // End of variables declaration//GEN-END:variables
