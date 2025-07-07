@@ -19,6 +19,7 @@ import visualizacion.VisualizadorUtils;
 /**
  *
  * @author Pedro, Christopher y Katia
+ * hola
  */
 public class Kruskal {
     public static ResultadoKruskal ejecutar(Grafo grafo, Graph grafoVisual) {
