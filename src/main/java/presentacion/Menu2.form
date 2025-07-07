@@ -92,6 +92,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="2. &#xc1;rbol de Expansi&#xf3;n M&#xed;nima."/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnArbolActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnRutas">
       <Properties>
@@ -116,6 +119,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="5. Salir."/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalirActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

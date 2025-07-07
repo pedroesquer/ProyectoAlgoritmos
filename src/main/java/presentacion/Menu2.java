@@ -17,6 +17,7 @@ public class Menu2 extends javax.swing.JFrame {
      */
     public Menu2() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -52,6 +53,11 @@ public class Menu2 extends javax.swing.JFrame {
 
         btnArbol.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
         btnArbol.setText("2. Árbol de Expansión Mínima.");
+        btnArbol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArbolActionPerformed(evt);
+            }
+        });
 
         btnRutas.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
         btnRutas.setText("3. Rutas más cortas.");
@@ -61,6 +67,11 @@ public class Menu2 extends javax.swing.JFrame {
 
         btnSalir.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
         btnSalir.setText("5. Salir.");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,6 +116,15 @@ public class Menu2 extends javax.swing.JFrame {
         ControladorVisual.getInstancia().abrirPantallaRecorridos();
         this.setVisible(false);
     }//GEN-LAST:event_btnRecorridosActionPerformed
+
+    private void btnArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArbolActionPerformed
+        ControladorVisual.getInstancia().abrirPantallaMenuMST();
+        this.setVisible(false);
+    }//GEN-LAST:event_btnArbolActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
