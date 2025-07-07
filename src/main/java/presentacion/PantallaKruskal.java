@@ -4,20 +4,40 @@
  */
 package presentacion;
 
+import base.Grafo;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import negocio.ControladorGrafo;
 import negocio.ControladorVisual;
+import org.graphstream.graph.Graph;
+import org.graphstream.ui.view.View;
+import org.graphstream.ui.view.Viewer;
+import resultados.ResultadoKruskal;
+import visualizacion.VisualizadorGrafo;
+import visualizacion.VisualizadorUtils;
 
 /**
  *
  * @author katia
  */
-public class Kruskal extends javax.swing.JFrame {
+public class PantallaKruskal extends javax.swing.JFrame {
+    
+    private final Grafo grafoLogico = ControladorGrafo.getGrafo();
+    
 
     /**
      * Creates new form Kruskal
      */
-    public Kruskal() {
+    public PantallaKruskal() {
         initComponents();
         setLocationRelativeTo(null);
+        
+        jPanel1.setLayout(new BorderLayout());
+        jPanel1.setPreferredSize(new Dimension(500, 300));
+        jPanel1.setMinimumSize(new Dimension(500, 300));
     }
 
     /**
@@ -32,10 +52,10 @@ public class Kruskal extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnVolver = new javax.swing.JButton();
+        btnEjecutar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(700, 500));
-        setPreferredSize(new java.awt.Dimension(700, 500));
         setResizable(false);
 
         lblTitulo.setFont(new java.awt.Font("Ebrima", 1, 36)); // NOI18N
@@ -60,6 +80,14 @@ public class Kruskal extends javax.swing.JFrame {
             }
         });
 
+        btnEjecutar.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 18)); // NOI18N
+        btnEjecutar.setText("Ejecutar");
+        btnEjecutar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEjecutarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -75,7 +103,9 @@ public class Kruskal extends javax.swing.JFrame {
                 .addContainerGap(64, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnVolver)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnEjecutar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(304, 304, 304))
         );
         layout.setVerticalGroup(
@@ -85,9 +115,11 @@ public class Kruskal extends javax.swing.JFrame {
                 .addComponent(lblTitulo)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEjecutar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(btnVolver)
-                .addContainerGap())
+                .addGap(12, 12, 12))
         );
 
         pack();
@@ -97,6 +129,61 @@ public class Kruskal extends javax.swing.JFrame {
         ControladorVisual.getInstancia().abrirPantallaMenuMST();
         this.setVisible(false);
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
+        
+        btnEjecutar.setEnabled(false);
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(500);
+                
+                if (grafoLogico.getLocalidades().isEmpty() || grafoLogico.getCarreteras().isEmpty()) {
+                    SwingUtilities.invokeLater(() ->
+                            JOptionPane.showMessageDialog(this, "El grafo lógico está vacío. No se puede ejecutar Kruskal.")
+                    );
+                    return;
+                }
+
+                SwingUtilities.invokeLater(() -> {
+                    // Limpia el panel
+                    jPanel1.removeAll();
+                    jPanel1.revalidate();
+                    jPanel1.repaint();
+
+                    // Crea el grafo visual desde el lógico
+                    Graph grafoVisual = VisualizadorGrafo.crearGrafoVisual(grafoLogico);
+                    VisualizadorUtils.reiniciarGrafo(grafoVisual);
+
+                    Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+                    viewer.enableAutoLayout();
+                    View view = viewer.addDefaultView(false);
+                    jPanel1.setLayout(new BorderLayout());
+                    jPanel1.add((Component) view, BorderLayout.CENTER);
+                    jPanel1.revalidate();
+
+                    // Ejecuta Kruskal
+                    new Thread(() -> {
+                        try {
+                            ResultadoKruskal resultado = algoritmos.Kruskal.ejecutar(grafoLogico, grafoVisual);
+                            double peso = resultado.getPesoTotal();
+                            SwingUtilities.invokeLater(() ->
+                                    JOptionPane.showMessageDialog(this, "Peso total del MST: " + peso + " km")
+                            );
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            SwingUtilities.invokeLater(() -> btnEjecutar.setEnabled(true));
+                        }
+                    }).start();
+
+                });
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }//GEN-LAST:event_btnEjecutarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -115,25 +202,27 @@ public class Kruskal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Kruskal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PantallaKruskal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Kruskal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PantallaKruskal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Kruskal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PantallaKruskal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Kruskal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PantallaKruskal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Kruskal().setVisible(true);
+                new PantallaKruskal().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEjecutar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblTitulo;

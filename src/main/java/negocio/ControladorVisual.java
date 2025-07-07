@@ -1,6 +1,6 @@
 package negocio;
 
-import presentacion.Kruskal;
+import presentacion.PantallaKruskal;
 import presentacion.Menu2;
 import presentacion.MenuMST;
 import presentacion.MenuPrincipal;
@@ -40,7 +40,7 @@ public class ControladorVisual {
     }
     
     public void abrirPantallaKruskal(){
-        Kruskal kruskal = new Kruskal();
+        PantallaKruskal kruskal = new PantallaKruskal();
         kruskal.setVisible(true);
     }
     
