@@ -8,6 +8,8 @@ import algoritmos.BFS;
 import base.Grafo;
 import base.Localidad;
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import negocio.ControladorGrafo;
 import negocio.ControladorVisual;
 import org.graphstream.graph.Graph;
@@ -16,6 +18,7 @@ import org.graphstream.ui.view.Viewer;
 import resultados.ResultadoBFS;
 import visualizacion.VisualizadorGrafo;
 import visualizacion.VisualizadorUtils;
+import org.graphstream.ui.view.Viewer;
 
 /**
  *
@@ -24,6 +27,7 @@ import visualizacion.VisualizadorUtils;
 public class Recorridos extends javax.swing.JFrame {
 
     private final Grafo grafoLogico = ControladorGrafo.getGrafo();
+
     private final Graph grafoVisual = VisualizadorGrafo.crearGrafoVisual(grafoLogico);
 
     public Recorridos() {
@@ -31,20 +35,17 @@ public class Recorridos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setSize(700, 500);
-
-        // 1. Cargar grafo lógico
-        Grafo grafoLogico = ControladorGrafo.getGrafo();
-
-// 2. Crear grafo visual
-        Graph grafoVisual = VisualizadorGrafo.crearGrafoVisual(grafoLogico);
-
-// 3. Insertar grafo visual en pnlGrafo
         pnlGrafo.setLayout(new BorderLayout());
+        pnlGrafo.setPreferredSize(new Dimension(500, 300));
+        pnlGrafo.setMinimumSize(new Dimension(500, 300));
         Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         viewer.enableAutoLayout();
+
         View view = viewer.addDefaultView(false);
-        pnlGrafo.add((java.awt.Component) view, BorderLayout.CENTER);
+        pnlGrafo.setLayout(new BorderLayout());
+        pnlGrafo.add((Component) view, BorderLayout.CENTER);
         pnlGrafo.revalidate();
+
     }
 
     /**
@@ -83,6 +84,11 @@ public class Recorridos extends javax.swing.JFrame {
         jPanel1.add(pnlGrafo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, -1, 290));
 
         btnDFS.setText("DFS");
+        btnDFS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDFSActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnDFS, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 360, 100, 50));
 
         btnBFS.setText("BFS");
@@ -103,7 +109,7 @@ public class Recorridos extends javax.swing.JFrame {
                 btnVolverActionPerformed(evt);
             }
         });
-        jPanel1.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 450, -1, -1));
+        jPanel1.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,26 +131,31 @@ public class Recorridos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnBFSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBFSActionPerformed
-        String ciudadInicio = "León"; // Puedes personalizar esto si usas un combo después
+        VisualizadorUtils.reiniciarGrafo(grafoVisual);
+        String ciudadInicio = "León";
 
-        // Buscar la Localidad correspondiente
         Localidad origen = grafoLogico.getLocalidades().stream()
                 .filter(l -> l.getNombre().equals(ciudadInicio))
                 .findFirst()
                 .orElse(null);
 
         if (origen != null) {
-            ResultadoBFS resultado = BFS.ejecutar(grafoLogico, origen, grafoVisual);
+            new Thread(() -> {
+                try {
+                    Thread.sleep(4000); // Dale tiempo al layout pa que se disperse
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-            for (var entrada : resultado.getPredecesores().entrySet()) {
-                Localidad hijo = entrada.getKey();
-                Localidad padre = entrada.getValue();
+                BFS.ejecutar(grafoLogico, origen, grafoVisual);
+            }).start();
+        }
+     }//GEN-LAST:event_btnBFSActionPerformed
 
-                VisualizadorUtils.pintarNodo(grafoVisual, hijo.getNombre(), "visitado");
-                VisualizadorUtils.pintarArista(grafoVisual, padre.getNombre(), hijo.getNombre(), "seleccionada");
-            }
-        }    }//GEN-LAST:event_btnBFSActionPerformed
+    private void btnDFSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDFSActionPerformed
+        VisualizadorUtils.reiniciarGrafo(grafoVisual);
 
+    }//GEN-LAST:event_btnDFSActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

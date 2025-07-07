@@ -44,6 +44,16 @@ public class VisualizadorUtils {
         }
     }
 
+    public static void reiniciarGrafo(Graph graph) {
+        for (org.graphstream.graph.Node n : graph.getNodeSet()) {
+            n.setAttribute("ui.class", "");
+        }
+
+        for (org.graphstream.graph.Edge e : graph.getEdgeSet()) {
+            e.setAttribute("ui.class", "");
+        }
+    }
+
     public static String getEstilosDefault() {
         return """
         node {
