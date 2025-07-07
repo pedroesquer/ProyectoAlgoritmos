@@ -8,6 +8,8 @@ import algoritmos.BFS;
 import base.Grafo;
 import base.Localidad;
 import java.awt.BorderLayout;
+import java.awt.Component;
+import javax.swing.SwingUtilities;
 import negocio.ControladorGrafo;
 import negocio.ControladorVisual;
 import org.graphstream.graph.Graph;
@@ -23,8 +25,9 @@ import visualizacion.VisualizadorUtils;
  */
 public class Recorridos extends javax.swing.JFrame {
 
-    private final Grafo grafoLogico = ControladorGrafo.getGrafo();
-    private final Graph grafoVisual = VisualizadorGrafo.crearGrafoVisual(grafoLogico);
+    private Grafo grafoLogico;
+    private Graph grafoVisual;
+    private View viewerView;
 
     public Recorridos() {
         initComponents();
@@ -32,19 +35,22 @@ public class Recorridos extends javax.swing.JFrame {
         setResizable(false);
         setSize(700, 500);
 
-        // 1. Cargar grafo lógico
-        Grafo grafoLogico = ControladorGrafo.getGrafo();
+        grafoLogico = ControladorGrafo.getGrafo();
 
-// 2. Crear grafo visual
-        Graph grafoVisual = VisualizadorGrafo.crearGrafoVisual(grafoLogico);
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                grafoVisual = VisualizadorGrafo.crearGrafoVisual(grafoLogico);
+                Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+                viewer.enableAutoLayout();
+                View view = viewer.addDefaultView(false);
 
-// 3. Insertar grafo visual en pnlGrafo
-        pnlGrafo.setLayout(new BorderLayout());
-        Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        viewer.enableAutoLayout();
-        View view = viewer.addDefaultView(false);
-        pnlGrafo.add((java.awt.Component) view, BorderLayout.CENTER);
-        pnlGrafo.revalidate();
+                pnlGrafo.setLayout(new BorderLayout());
+                pnlGrafo.add((Component) view, BorderLayout.CENTER);
+                pnlGrafo.revalidate();
+            }
+        });
+
     }
 
     /**
@@ -144,7 +150,6 @@ public class Recorridos extends javax.swing.JFrame {
                 VisualizadorUtils.pintarArista(grafoVisual, padre.getNombre(), hijo.getNombre(), "seleccionada");
             }
         }    }//GEN-LAST:event_btnBFSActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
