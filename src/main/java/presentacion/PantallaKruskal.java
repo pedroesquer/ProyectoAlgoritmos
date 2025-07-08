@@ -15,7 +15,7 @@ import negocio.ControladorVisual;
 import org.graphstream.graph.Graph;
 import org.graphstream.ui.view.View;
 import org.graphstream.ui.view.Viewer;
-import resultados.ResultadoKruskal;
+import resultados.ResultadoMST;
 import visualizacion.VisualizadorGrafo;
 import visualizacion.VisualizadorUtils;
 
@@ -26,6 +26,7 @@ import visualizacion.VisualizadorUtils;
 public class PantallaKruskal extends javax.swing.JFrame {
     
     private final Grafo grafoLogico = ControladorGrafo.getGrafo();
+    private final Graph grafoVisual = VisualizadorGrafo.crearGrafoVisual(grafoLogico);
     
 
     /**
@@ -38,6 +39,12 @@ public class PantallaKruskal extends javax.swing.JFrame {
         jPanel1.setLayout(new BorderLayout());
         jPanel1.setPreferredSize(new Dimension(943, 500));
         jPanel1.setMinimumSize(new Dimension(943, 500));
+        
+        Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        viewer.enableAutoLayout();
+        View view = viewer.addDefaultView(false);
+        jPanel1.add((Component) view, BorderLayout.CENTER);
+        jPanel1.revalidate();
     }
 
     /**
@@ -166,10 +173,11 @@ public class PantallaKruskal extends javax.swing.JFrame {
                     // Ejecuta Kruskal
                     new Thread(() -> {
                         try {
-                            ResultadoKruskal resultado = algoritmos.Kruskal.ejecutar(grafoLogico, grafoVisual);
+                            ResultadoMST resultado = algoritmos.Kruskal.ejecutar(grafoLogico, grafoVisual);
                             double peso = resultado.getPesoTotal();
                             SwingUtilities.invokeLater(() ->
-                                    JOptionPane.showMessageDialog(this, "Peso total del MST: " + peso + " km")
+                                    JOptionPane.showMessageDialog(this, "Peso total del MST: " + peso + " km",
+                                            "Resultado de Kruskal", JOptionPane.INFORMATION_MESSAGE)
                             );
                         } catch (Exception e) {
                             e.printStackTrace();

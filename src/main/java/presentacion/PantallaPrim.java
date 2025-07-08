@@ -4,17 +4,52 @@
  */
 package presentacion;
 
+import algoritmos.Prim;
+import base.Grafo;
+import base.Localidad;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import negocio.ControladorGrafo;
+import negocio.ControladorVisual;
+import org.graphstream.graph.Graph;
+import org.graphstream.ui.view.View;
+import org.graphstream.ui.view.Viewer;
+import resultados.ResultadoMST;
+import visualizacion.VisualizadorGrafo;
+import visualizacion.VisualizadorUtils;
+
 /**
  *
  * @author katia
  */
 public class PantallaPrim extends javax.swing.JFrame {
+    private final Grafo grafoLogico = ControladorGrafo.getGrafo();
+    private final Graph grafoVisual = VisualizadorGrafo.crearGrafoVisual(grafoLogico);
 
     /**
      * Creates new form PantallaPrim
      */
     public PantallaPrim() {
         initComponents();
+        
+        cmbOrigen.removeAllItems();
+        for (Localidad loc : ControladorGrafo.getGrafo().getLocalidades()) {
+            cmbOrigen.addItem(loc.getNombre());
+        }
+        
+        setLocationRelativeTo(null);
+        jPanel2.setLayout(new BorderLayout());
+        jPanel2.setPreferredSize(new Dimension(940, 500));
+        jPanel2.setMinimumSize(new Dimension(940,500));
+        
+        Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        viewer.enableAutoLayout();
+        View view = viewer.addDefaultView(false);
+        jPanel2.add((Component) view, BorderLayout.CENTER);
+        jPanel2.revalidate();
     }
 
     /**
@@ -26,21 +61,144 @@ public class PantallaPrim extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTitulo = new javax.swing.JLabel();
+        btnEjecutar = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        cmbOrigen = new javax.swing.JComboBox<>();
+        lblOrigen = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1080, 720));
+        setPreferredSize(new java.awt.Dimension(1080, 720));
+        setResizable(false);
+
+        lblTitulo.setFont(new java.awt.Font("Ebrima", 1, 36)); // NOI18N
+        lblTitulo.setText("Prim");
+
+        btnEjecutar.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 18)); // NOI18N
+        btnEjecutar.setText("Ejecutar");
+        btnEjecutar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEjecutarActionPerformed(evt);
+            }
+        });
+
+        btnVolver.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 18)); // NOI18N
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 939, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 477, Short.MAX_VALUE)
+        );
+
+        cmbOrigen.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
+        cmbOrigen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbOrigen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbOrigenActionPerformed(evt);
+            }
+        });
+
+        lblOrigen.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 18)); // NOI18N
+        lblOrigen.setText("Origen:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(74, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblTitulo)
+                        .addGap(248, 248, 248)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblOrigen))
+                        .addGap(87, 87, 87))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnEjecutar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(488, 488, 488))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(lblTitulo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(lblOrigen)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEjecutar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnVolver)
+                .addGap(85, 85, 85))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
+        btnEjecutar.setEnabled(false);
+        VisualizadorUtils.reiniciarGrafo(grafoVisual);
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(500); 
+                
+                String nombreSeleccionado = (String) cmbOrigen.getSelectedItem();
+                
+                Localidad localidadInicio = grafoLogico.getLocalidades().stream()
+                        .filter(l -> l.getNombre().equals(nombreSeleccionado))
+                        .findFirst()
+                        .orElse(null);
+
+                if (localidadInicio != null) {
+                    ResultadoMST resultado = Prim.ejecutar(grafoLogico, grafoVisual, localidadInicio);
+                    System.out.println("Peso total del MST: " + resultado.getPesoTotal() + " km");
+                    JOptionPane.showMessageDialog(this, "Peso total del MST: " + resultado.getPesoTotal() + " km", 
+                              "Resultado de Prim", JOptionPane.INFORMATION_MESSAGE);
+
+                } 
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } finally {
+                SwingUtilities.invokeLater(() -> btnEjecutar.setEnabled(true));
+            }
+        }).start();    
+    }//GEN-LAST:event_btnEjecutarActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        ControladorVisual.getInstancia().abrirPantallaMenuMST();
+        this.setVisible(false);
+    }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void cmbOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbOrigenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbOrigenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +236,11 @@ public class PantallaPrim extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEjecutar;
+    private javax.swing.JButton btnVolver;
+    private javax.swing.JComboBox<String> cmbOrigen;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblOrigen;
+    private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
 }

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.graphstream.graph.Graph;
-import resultados.ResultadoKruskal;
+import resultados.ResultadoMST;
 import visualizacion.VisualizadorUtils;
 
 /**
@@ -22,7 +22,7 @@ import visualizacion.VisualizadorUtils;
  * hola
  */
 public class Kruskal {
-    public static ResultadoKruskal ejecutar(Grafo grafo, Graph grafoVisual) {
+    public static ResultadoMST ejecutar(Grafo grafo, Graph grafoVisual) {
         List<Carretera> mst = new ArrayList<>();
         List<Carretera> aristas = new ArrayList<>(grafo.getCarreteras());
         aristas.sort(Comparator.comparingDouble(Carretera::getPeso));
@@ -32,8 +32,6 @@ public class Kruskal {
         for (Localidad loc : grafo.getLocalidades()) {
             padre.put(loc, loc);
         }
-
-        System.out.println("========== Kruskal ==========");
         
         for (Carretera c : aristas) {
             Localidad a = c.getOrigen();
@@ -67,12 +65,7 @@ public class Kruskal {
                 System.out.printf("Arista descartada: %s - %s (formaría ciclo)%n", a.getNombre(), b.getNombre());
             }
         }
-        
-        double total = mst.stream().mapToDouble(Carretera::getPeso).sum();
-        System.out.println("========== Kruskal Finalizado ==========");
-        System.out.printf("Peso total del MST: ", total);
-
-        return new ResultadoKruskal(mst);
+        return new ResultadoMST(mst);
     }
 
     private static Localidad encontrar(Map<Localidad, Localidad> padre, Localidad x) {
