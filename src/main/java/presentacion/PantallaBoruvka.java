@@ -6,7 +6,7 @@ package presentacion;
 
 /**
  *
- * @author katia
+ * @author Pedro, Christopher y Katia
  */
 public class PantallaBoruvka extends javax.swing.JFrame {
 

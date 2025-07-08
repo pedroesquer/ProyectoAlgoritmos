@@ -23,7 +23,7 @@ import visualizacion.VisualizadorUtils;
 
 /**
  *
- * @author katia
+ * @author Pedro, Christopher y Katia
  */
 public class PantallaPrim extends javax.swing.JFrame {
     private final Grafo grafoLogico = ControladorGrafo.getGrafo();

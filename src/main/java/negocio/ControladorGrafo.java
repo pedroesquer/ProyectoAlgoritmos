@@ -5,6 +5,10 @@ import base.Grafo;
 import base.Localidad;
 import java.util.List;
 
+/**
+ * 
+ * @author Pedro, Christopher y Katia
+ */
 public class ControladorGrafo {
 
     /**

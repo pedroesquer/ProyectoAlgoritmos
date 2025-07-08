@@ -21,7 +21,7 @@ import visualizacion.VisualizadorUtils;
 
 /**
  *
- * @author Chris
+ * @author Pedro, Christopher y Katia
  */
 public class MenuRutaCorta extends javax.swing.JFrame {
 

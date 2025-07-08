@@ -15,7 +15,7 @@ import visualizacion.VisualizadorUtils;
  * Implementa el algoritmo DFS (Depth-First Search) sobre un grafo lógico,
  * iniciando desde una localidad, y visualiza el recorrido en un grafo visual.
  *
- * @author Pedro
+ * @author Pedro, Christopher y Katia
  */
 public class DFS {
 

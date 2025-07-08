@@ -11,7 +11,7 @@ import presentacion.Recorridos;
 
 /**
  *
- * @author pedro
+ * @author Pedro, Christopher y Katia
  */
 public class ControladorVisual {
 

@@ -13,7 +13,7 @@ import org.graphstream.graph.implementations.SingleGraph;
 
 /**
  *
- * @author pedro
+ * @author Pedro, Christopher y Katia
  */
 public class VisualizadorGrafo {
 

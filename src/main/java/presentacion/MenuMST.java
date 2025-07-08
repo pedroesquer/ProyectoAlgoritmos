@@ -8,7 +8,7 @@ import negocio.ControladorVisual;
 
 /**
  *
- * @author katia
+ * @author Pedro, Christopher y Katia
  */
 public class MenuMST extends javax.swing.JFrame {
 

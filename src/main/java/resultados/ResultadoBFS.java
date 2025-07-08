@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  *
- * @author pedro
+ * @author Pedro, Christopher y Katia
  */
 public class ResultadoBFS {
 

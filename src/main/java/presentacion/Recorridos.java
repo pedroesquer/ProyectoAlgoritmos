@@ -24,7 +24,7 @@ import org.graphstream.ui.view.Viewer;
 
 /**
  *
- * @author pedro
+ * @author Pedro, Christopher y Katia
  */
 public class Recorridos extends javax.swing.JFrame {
 

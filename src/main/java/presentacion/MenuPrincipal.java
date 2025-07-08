@@ -8,7 +8,7 @@ import negocio.ControladorVisual;
 
 /**
  *
- * @author pedro
+ * @author Pedro, Christopher y Katia
  */
 public class MenuPrincipal extends javax.swing.JFrame {
 

@@ -7,7 +7,7 @@ import java.util.Map;
  * Guarda los resultados del algoritmo DFS: - Predecesores para reconstruir el
  * árbol DFS
  *
- * @author Pedro
+ * @author Pedro, Christopher y Katia
  */
 public class ResultadoDFS {
 

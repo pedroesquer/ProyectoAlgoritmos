@@ -21,7 +21,7 @@ import visualizacion.VisualizadorUtils;
 
 /**
  *
- * @author katia
+ * @author Pedro, Christopher y Katia
  */
 public class PantallaKruskal extends javax.swing.JFrame {
     
