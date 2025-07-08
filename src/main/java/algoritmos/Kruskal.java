@@ -85,7 +85,7 @@ public class Kruskal {
      */
     private static Localidad encontrar(Map<Localidad, Localidad> padre, Localidad x) {
         if (!padre.get(x).equals(x)) {
-            padre.put(x, encontrar(padre, padre.get(x))); // Path compression
+            padre.put(x, encontrar(padre, padre.get(x)));
         }
         return padre.get(x);
     }
