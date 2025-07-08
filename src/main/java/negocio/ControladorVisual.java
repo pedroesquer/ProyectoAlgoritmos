@@ -5,6 +5,8 @@ import presentacion.Menu2;
 import presentacion.MenuMST;
 import presentacion.MenuPrincipal;
 import presentacion.MenuRutaCorta;
+import presentacion.PantallaBoruvka;
+import presentacion.PantallaPrim;
 import presentacion.Recorridos;
 
 /**
@@ -43,6 +45,16 @@ public class ControladorVisual {
     public void abrirPantallaKruskal(){
         PantallaKruskal kruskal = new PantallaKruskal();
         kruskal.setVisible(true);
+    }
+    
+    public void abrirPantallaPrim(){
+        PantallaPrim prim = new PantallaPrim();
+        prim.setVisible(true);
+    }
+    
+    public void abrirPantallaBoruvka(){
+        PantallaBoruvka boruvka = new PantallaBoruvka();
+        boruvka.setVisible(true);
     }
     
     public void abrirRutaMasCorta(){

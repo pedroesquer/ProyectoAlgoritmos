@@ -54,9 +54,19 @@ public class MenuMST extends javax.swing.JFrame {
 
         btnPrim.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnPrim.setText("Prim");
+        btnPrim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrimActionPerformed(evt);
+            }
+        });
 
         btnBoruvka.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnBoruvka.setText("Boruvka ");
+        btnBoruvka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBoruvkaActionPerformed(evt);
+            }
+        });
 
         btnVolver.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnVolver.setText("Volver");
@@ -112,6 +122,16 @@ public class MenuMST extends javax.swing.JFrame {
         ControladorVisual.getInstancia().menuPrincipalVisible();
         this.setVisible(false);
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnPrimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimActionPerformed
+        ControladorVisual.getInstancia().abrirPantallaPrim();
+        this.setVisible(false);
+    }//GEN-LAST:event_btnPrimActionPerformed
+
+    private void btnBoruvkaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoruvkaActionPerformed
+        ControladorVisual.getInstancia().abrirPantallaBoruvka();
+        this.setVisible(false);
+    }//GEN-LAST:event_btnBoruvkaActionPerformed
 
 
     
