@@ -4,6 +4,7 @@
  */
 package presentacion;
 
+import algoritmos.BellmanFord;
 import algoritmos.Dijkstra;
 import base.Grafo;
 import base.Localidad;
@@ -48,12 +49,12 @@ public class MenuRutaCorta extends javax.swing.JFrame {
         llenarComboBoxes();
 
         // Cambiar layout de jPanel1
-// Layout horizontal para jPanel1
+        // Layout horizontal para jPanel1
         jPanel1.setLayout(new BoxLayout(jPanel1, BoxLayout.X_AXIS));
         jPanel1.setPreferredSize(new Dimension(1200, 500));
         jPanel1.setMinimumSize(new Dimension(1220, 500));
 
-// Crear grafo visual
+        // Crear grafo visual
         Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         viewer.enableAutoLayout();
         View view = viewer.addDefaultView(false);
@@ -61,7 +62,7 @@ public class MenuRutaCorta extends javax.swing.JFrame {
         graphComponent.setPreferredSize(new Dimension(950, 500));  // Aumentamos el tamaño
         jPanel1.add(graphComponent);
 
-// Crear tabla más compacta
+        // Crear tabla más compacta
         String[] columnas = {"Origen", "Destino", "Distancia (km)"};
         modeloTabla = new javax.swing.table.DefaultTableModel(columnas, 0);
         tablaRuta = new javax.swing.JTable(modeloTabla);
@@ -69,7 +70,7 @@ public class MenuRutaCorta extends javax.swing.JFrame {
         scrollTabla.setPreferredSize(new Dimension(250, 500));  // Más delgada
         jPanel1.add(scrollTabla);
 
-// Agregar jPanel1 al contentPane (posición ya bien centrada)
+        // Agregar jPanel1 al contentPane (posición ya bien centrada)
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 1200, 500));
 
         pack();
@@ -173,11 +174,9 @@ public class MenuRutaCorta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBellmanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBellmanActionPerformed
-        //Obtenemos el origen y el destino seleccionado
         String origenNombre = (String) ComboBoxOrigen.getSelectedItem();
         String destinoNombre = (String) ComboBoxDestino.getSelectedItem();
 
-        //Convertimos a objectos "Localidad"
         Localidad origen = grafoLogico.getLocalidades().stream()
                 .filter(l -> l.getNombre().equals(origenNombre))
                 .findFirst().orElse(null);
@@ -187,24 +186,45 @@ public class MenuRutaCorta extends javax.swing.JFrame {
                 .findFirst().orElse(null);
 
         if (origen == null || destino == null) {
-            return; // o mostrar alerta
+            return;
         }
 
-        //Deshabilitamos los botones
         btnDijkstra.setEnabled(false);
         btnBellman.setEnabled(false);
         btnVolver.setEnabled(false);
 
-        //Lanzamos el hilo
         new Thread(() -> {
             try {
                 VisualizadorUtils.reiniciarGrafo(grafoVisual);
-                Dijkstra.ejecutar(grafoLogico, origen, destino, grafoVisual);
+                ResultadoCamino resultado = BellmanFord.ejecutar(grafoLogico, origen, destino, grafoVisual);
+
+                SwingUtilities.invokeLater(() -> {
+                    modeloTabla.setRowCount(0);
+                    java.util.List<Localidad> camino = resultado.getCamino();
+
+                    for (int i = 0; i < camino.size() - 1; i++) {
+                        Localidad origenPaso = camino.get(i);
+                        Localidad destinoPaso = camino.get(i + 1);
+
+                        double peso = grafoLogico.getCarreteras().stream()
+                                .filter(c
+                                        -> (c.getOrigen().equals(origenPaso) && c.getDestino().equals(destinoPaso))
+                                || (c.getOrigen().equals(destinoPaso) && c.getDestino().equals(origenPaso))
+                                )
+                                .mapToDouble(c -> c.getPeso())
+                                .findFirst().orElse(0.0);
+
+                        modeloTabla.addRow(new Object[]{
+                            origenPaso.getNombre(),
+                            destinoPaso.getNombre(),
+                            String.format("%.2f", peso)
+                        });
+                    }
+                });
 
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                // 👉 Y aquí los vuelves a habilitar en el hilo de Swing
                 SwingUtilities.invokeLater(() -> {
                     btnDijkstra.setEnabled(true);
                     btnBellman.setEnabled(true);
@@ -212,7 +232,6 @@ public class MenuRutaCorta extends javax.swing.JFrame {
                 });
             }
         }).start();
-
     }//GEN-LAST:event_btnBellmanActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -263,7 +282,10 @@ public class MenuRutaCorta extends javax.swing.JFrame {
 
                         // Buscar la carretera entre esos dos nodos
                         double peso = grafoLogico.getCarreteras().stream()
-                                .filter(c -> c.getOrigen().equals(origenPaso) && c.getDestino().equals(destinoPaso))
+                                .filter(c
+                                        -> (c.getOrigen().equals(origenPaso) && c.getDestino().equals(destinoPaso))
+                                || (c.getOrigen().equals(destinoPaso) && c.getDestino().equals(origenPaso))
+                                )
                                 .mapToDouble(c -> c.getPeso())
                                 .findFirst().orElse(0.0);
 
@@ -278,6 +300,7 @@ public class MenuRutaCorta extends javax.swing.JFrame {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
+                //Hanilitamos otra vez los botones
                 SwingUtilities.invokeLater(() -> {
                     btnDijkstra.setEnabled(true);
                     btnBellman.setEnabled(true);

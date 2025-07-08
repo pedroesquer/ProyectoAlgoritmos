@@ -47,8 +47,14 @@ public class Dijkstra {
             }
 
             for (Carretera carretera : grafo.getCarreteras()) {
+                Localidad vecino = null;
                 if (carretera.getOrigen().equals(actual)) {
-                    Localidad vecino = carretera.getDestino();
+                    vecino = carretera.getDestino();
+                } else if (carretera.getDestino().equals(actual)) {
+                    vecino = carretera.getOrigen();
+                }
+
+                if (vecino != null && !visitados.contains(vecino)) {
                     double nuevaDistancia = distancias.get(actual) + carretera.getPeso();
 
                     if (nuevaDistancia < distancias.get(vecino)) {
@@ -58,6 +64,7 @@ public class Dijkstra {
                     }
                 }
             }
+
         }
 
         // Pintar el camino más corto
