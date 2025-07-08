@@ -11,15 +11,16 @@ import base.Localidad;
 import java.util.*;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
+import resultados.ResultadoCamino;
 import visualizacion.VisualizadorUtils;
 
 /**
  *
- * @author Pedro, Christopher y Katia
+ * @author Chris
  */
 public class Dijkstra {
 
-    public static void ejecutar(Grafo grafo, Localidad origen, Localidad destino, Graph grafoVisual) throws InterruptedException {
+    public static ResultadoCamino ejecutar(Grafo grafo, Localidad origen, Localidad destino, Graph grafoVisual) throws InterruptedException {
         Map<Localidad, Double> distancias = new HashMap<>();
         Map<Localidad, Localidad> anteriores = new HashMap<>();
         Set<Localidad> visitados = new HashSet<>();
@@ -38,7 +39,7 @@ public class Dijkstra {
                 continue;
             }
 
-            VisualizadorUtils.pintarNodo(grafoVisual, actual.getNombre(), "amarillo");
+            VisualizadorUtils.pintarNodo(grafoVisual, actual.getNombre(), "visitado");
             Thread.sleep(300);
 
             if (actual.equals(destino)) {
@@ -57,19 +58,30 @@ public class Dijkstra {
                     }
                 }
             }
-
         }
 
         // Pintar el camino más corto
         Localidad actual = destino;
         while (anteriores.containsKey(actual)) {
             Localidad anterior = anteriores.get(actual);
-            VisualizadorUtils.pintarArista(grafoVisual, anterior.getNombre(), actual.getNombre(), "azul");
-            VisualizadorUtils.pintarNodo(grafoVisual, actual.getNombre(), "verde");
+            VisualizadorUtils.pintarArista(grafoVisual, anterior.getNombre(), actual.getNombre(), "seleccionada");
+            VisualizadorUtils.pintarNodo(grafoVisual, actual.getNombre(), "destino");
             actual = anterior;
             Thread.sleep(400);
         }
 
-        VisualizadorUtils.pintarNodo(grafoVisual, origen.getNombre(), "rojo");
+        VisualizadorUtils.pintarNodo(grafoVisual, origen.getNombre(), "origen");
+
+        // Armar el camino en orden
+        List<Localidad> camino = new ArrayList<>();
+        actual = destino;
+        while (actual != null) {
+            camino.add(0, actual);
+            actual = anteriores.get(actual);
+        }
+
+        System.out.println("Distancia total del camino más corto: " + distancias.get(destino) + " km");
+        return new ResultadoCamino(camino, distancias.get(destino));
     }
+
 }

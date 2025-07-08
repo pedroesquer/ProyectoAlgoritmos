@@ -15,8 +15,10 @@ import visualizacion.VisualizadorGrafo;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import javax.swing.BoxLayout;
 import javax.swing.SwingUtilities;
 import negocio.ControladorVisual;
+import resultados.ResultadoCamino;
 import visualizacion.VisualizadorUtils;
 
 /**
@@ -31,27 +33,48 @@ public class MenuRutaCorta extends javax.swing.JFrame {
     private final Grafo grafoLogico = ControladorGrafo.getGrafo();
     private final Graph grafoVisual = VisualizadorGrafo.crearGrafoVisual(grafoLogico);
 
+    private javax.swing.JTable tablaRuta;
+    private javax.swing.JScrollPane scrollTabla;
+    private javax.swing.table.DefaultTableModel modeloTabla;
+
     public MenuRutaCorta() {
         initComponents();
+
         setLocationRelativeTo(null);
         setResizable(false);
-        setSize(1100, 720);
+        setSize(1300, 800); // Aumentamos tamaño para que quepa todo
 
-        // Llenar ComboBoxes como ya tienes
+        // Llenar ComboBoxes
         llenarComboBoxes();
 
-        // Integrar el grafo visual como en Recorridos
-        jPanel1.setLayout(new BorderLayout());
-        jPanel1.setPreferredSize(new Dimension(720, 500));
-        jPanel1.setMinimumSize(new Dimension(720, 500));
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 890, 480));//lo centra
+        // Cambiar layout de jPanel1
+// Layout horizontal para jPanel1
+        jPanel1.setLayout(new BoxLayout(jPanel1, BoxLayout.X_AXIS));
+        jPanel1.setPreferredSize(new Dimension(1200, 500));
+        jPanel1.setMinimumSize(new Dimension(1220, 500));
 
+// Crear grafo visual
         Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         viewer.enableAutoLayout();
         View view = viewer.addDefaultView(false);
+        Component graphComponent = (Component) view;
+        graphComponent.setPreferredSize(new Dimension(950, 500));  // Aumentamos el tamaño
+        jPanel1.add(graphComponent);
 
-        jPanel1.add((Component) view, BorderLayout.CENTER);
-        jPanel1.revalidate();
+// Crear tabla más compacta
+        String[] columnas = {"Origen", "Destino", "Distancia (km)"};
+        modeloTabla = new javax.swing.table.DefaultTableModel(columnas, 0);
+        tablaRuta = new javax.swing.JTable(modeloTabla);
+        scrollTabla = new javax.swing.JScrollPane(tablaRuta);
+        scrollTabla.setPreferredSize(new Dimension(250, 500));  // Más delgada
+        jPanel1.add(scrollTabla);
+
+// Agregar jPanel1 al contentPane (posición ya bien centrada)
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 1200, 500));
+
+        pack();
+        setLocationRelativeTo(null); // 🔥 Centra la ventana
+        setResizable(false);
     }
 
     /**
@@ -89,7 +112,7 @@ public class MenuRutaCorta extends javax.swing.JFrame {
                 btnBellmanActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBellman, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 630, 239, -1));
+        getContentPane().add(btnBellman, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 680, 239, -1));
 
         btnDijkstra.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnDijkstra.setText("Dijkstra");
@@ -98,7 +121,7 @@ public class MenuRutaCorta extends javax.swing.JFrame {
                 btnDijkstraActionPerformed(evt);
             }
         });
-        getContentPane().add(btnDijkstra, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 630, 239, -1));
+        getContentPane().add(btnDijkstra, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 680, 239, -1));
 
         btnVolver.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnVolver.setText("Volver");
@@ -107,7 +130,7 @@ public class MenuRutaCorta extends javax.swing.JFrame {
                 btnVolverActionPerformed(evt);
             }
         });
-        getContentPane().add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 630, 239, -1));
+        getContentPane().add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 680, 239, -1));
 
         ComboBoxOrigen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ComboBoxOrigen.addActionListener(new java.awt.event.ActionListener() {
@@ -194,6 +217,7 @@ public class MenuRutaCorta extends javax.swing.JFrame {
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         ControladorVisual.getInstancia().menuPrincipalVisible();
+        this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDijkstraActionPerformed
@@ -223,12 +247,37 @@ public class MenuRutaCorta extends javax.swing.JFrame {
         new Thread(() -> {
             try {
                 VisualizadorUtils.reiniciarGrafo(grafoVisual);
-                Dijkstra.ejecutar(grafoLogico, origen, destino, grafoVisual);
+                ResultadoCamino resultado = Dijkstra.ejecutar(grafoLogico, origen, destino, grafoVisual);
+
+                SwingUtilities.invokeLater(() -> {
+                    // Limpiar tabla
+                    modeloTabla.setRowCount(0);
+
+                    // Obtener lista de localidades
+                    java.util.List<Localidad> camino = resultado.getCamino();
+
+                    // Agregar a la tabla los pares (origen, destino, peso)
+                    for (int i = 0; i < camino.size() - 1; i++) {
+                        Localidad origenPaso = camino.get(i);
+                        Localidad destinoPaso = camino.get(i + 1);
+
+                        // Buscar la carretera entre esos dos nodos
+                        double peso = grafoLogico.getCarreteras().stream()
+                                .filter(c -> c.getOrigen().equals(origenPaso) && c.getDestino().equals(destinoPaso))
+                                .mapToDouble(c -> c.getPeso())
+                                .findFirst().orElse(0.0);
+
+                        modeloTabla.addRow(new Object[]{
+                            origenPaso.getNombre(),
+                            destinoPaso.getNombre(),
+                            String.format("%.2f", peso)
+                        });
+                    }
+                });
 
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                // 👉 Y aquí los vuelves a habilitar en el hilo de Swing
                 SwingUtilities.invokeLater(() -> {
                     btnDijkstra.setEnabled(true);
                     btnBellman.setEnabled(true);
@@ -236,6 +285,7 @@ public class MenuRutaCorta extends javax.swing.JFrame {
                 });
             }
         }).start();
+
 
     }//GEN-LAST:event_btnDijkstraActionPerformed
 

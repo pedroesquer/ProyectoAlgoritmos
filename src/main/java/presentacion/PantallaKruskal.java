@@ -63,7 +63,6 @@ public class PantallaKruskal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(700, 500));
-        setPreferredSize(new java.awt.Dimension(1080, 720));
         setResizable(false);
 
         lblTitulo.setFont(new java.awt.Font("Ebrima", 1, 36)); // NOI18N
