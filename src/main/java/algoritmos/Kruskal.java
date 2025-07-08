@@ -17,11 +17,19 @@ import resultados.ResultadoMST;
 import visualizacion.VisualizadorUtils;
 
 /**
- *
+ * Clase que implementa el algoritmo de Kruskal para encontrar el Árbol de Expansión
+ * Mínimo de un grafo ponderado.
+ * 
  * @author Pedro, Christopher y Katia
  * hola
  */
 public class Kruskal {
+    /**
+     * Ejecuta el algoritmo de Kruskal sobre el grafo dado.
+     * @param grafo Grafo lógico que contiene las localidades y carreteras.
+     * @param grafoVisual Grafo visual de GraphStream para mostrar el proceso.
+     * @return Objeto ResultadoMST que contiene las aristas seleccionadas.
+     */
     public static ResultadoMST ejecutar(Grafo grafo, Graph grafoVisual) {
         List<Carretera> mst = new ArrayList<>();
         List<Carretera> aristas = new ArrayList<>(grafo.getCarreteras());
@@ -68,6 +76,13 @@ public class Kruskal {
         return new ResultadoMST(mst);
     }
 
+    /**
+     * Encuentra la raíz del conjunto al que pertenece una localidad, usando 
+     * compresión de caminos.
+     * @param padre Mapa que representa los conjuntos disjuntos.
+     * @param x Localidad de la que se desea encontrar la raíz de su conjunto.
+     * @return La raíz del conjunto al que pertenece la localidad.
+     */
     private static Localidad encontrar(Map<Localidad, Localidad> padre, Localidad x) {
         if (!padre.get(x).equals(x)) {
             padre.put(x, encontrar(padre, padre.get(x))); // Path compression
