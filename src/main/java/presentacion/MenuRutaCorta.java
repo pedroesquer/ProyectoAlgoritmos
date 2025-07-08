@@ -4,7 +4,20 @@
  */
 package presentacion;
 
+import algoritmos.Dijkstra;
+import base.Grafo;
+import base.Localidad;
+import negocio.ControladorGrafo;
+import org.graphstream.graph.Graph;
+import org.graphstream.ui.view.View;
+import org.graphstream.ui.view.Viewer;
+import visualizacion.VisualizadorGrafo;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import javax.swing.SwingUtilities;
 import negocio.ControladorVisual;
+import visualizacion.VisualizadorUtils;
 
 /**
  *
@@ -15,9 +28,30 @@ public class MenuRutaCorta extends javax.swing.JFrame {
     /**
      * Creates new form MenuMST
      */
+    private final Grafo grafoLogico = ControladorGrafo.getGrafo();
+    private final Graph grafoVisual = VisualizadorGrafo.crearGrafoVisual(grafoLogico);
+
     public MenuRutaCorta() {
         initComponents();
         setLocationRelativeTo(null);
+        setResizable(false);
+        setSize(1100, 720);
+
+        // Llenar ComboBoxes como ya tienes
+        llenarComboBoxes();
+
+        // Integrar el grafo visual como en Recorridos
+        jPanel1.setLayout(new BorderLayout());
+        jPanel1.setPreferredSize(new Dimension(720, 500));
+        jPanel1.setMinimumSize(new Dimension(720, 500));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 890, 480));//lo centra
+
+        Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        viewer.enableAutoLayout();
+        View view = viewer.addDefaultView(false);
+
+        jPanel1.add((Component) view, BorderLayout.CENTER);
+        jPanel1.revalidate();
     }
 
     /**
@@ -33,13 +67,20 @@ public class MenuRutaCorta extends javax.swing.JFrame {
         btnBellman = new javax.swing.JButton();
         btnDijkstra = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
+        ComboBoxOrigen = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        ComboBoxDestino = new javax.swing.JComboBox<>();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(700, 500));
         setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Ebrima", 1, 45)); // NOI18N
         jLabel1.setText("Rutas más cortas");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, -1, -1));
 
         btnBellman.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnBellman.setText("Bellman–Ford");
@@ -48,6 +89,7 @@ public class MenuRutaCorta extends javax.swing.JFrame {
                 btnBellmanActionPerformed(evt);
             }
         });
+        getContentPane().add(btnBellman, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 630, 239, -1));
 
         btnDijkstra.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnDijkstra.setText("Dijkstra");
@@ -56,6 +98,7 @@ public class MenuRutaCorta extends javax.swing.JFrame {
                 btnDijkstraActionPerformed(evt);
             }
         });
+        getContentPane().add(btnDijkstra, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 630, 239, -1));
 
         btnVolver.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnVolver.setText("Volver");
@@ -64,44 +107,89 @@ public class MenuRutaCorta extends javax.swing.JFrame {
                 btnVolverActionPerformed(evt);
             }
         });
+        getContentPane().add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 630, 239, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(214, 214, 214)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnDijkstra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnBellman, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-                            .addComponent(btnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(157, 157, 157)
-                        .addComponent(jLabel1)))
-                .addContainerGap(188, Short.MAX_VALUE))
+        ComboBoxOrigen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboBoxOrigen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxOrigenActionPerformed(evt);
+            }
+        });
+        getContentPane().add(ComboBoxOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 88, 110, 38));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setText("Destino");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 60, 102, -1));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setText("Origen");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 61, 102, -1));
+
+        ComboBoxDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboBoxDestino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxDestinoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(ComboBoxDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 90, 110, 38));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 347, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel1)
-                .addGap(70, 70, 70)
-                .addComponent(btnBellman)
-                .addGap(58, 58, 58)
-                .addComponent(btnDijkstra)
-                .addGap(68, 68, 68)
-                .addComponent(btnVolver)
-                .addContainerGap(97, Short.MAX_VALUE))
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 213, Short.MAX_VALUE)
         );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBellmanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBellmanActionPerformed
-        ControladorVisual.getInstancia().abrirPantallaKruskal();
-        this.setVisible(false);
+        //Obtenemos el origen y el destino seleccionado
+        String origenNombre = (String) ComboBoxOrigen.getSelectedItem();
+        String destinoNombre = (String) ComboBoxDestino.getSelectedItem();
+
+        //Convertimos a objectos "Localidad"
+        Localidad origen = grafoLogico.getLocalidades().stream()
+                .filter(l -> l.getNombre().equals(origenNombre))
+                .findFirst().orElse(null);
+
+        Localidad destino = grafoLogico.getLocalidades().stream()
+                .filter(l -> l.getNombre().equals(destinoNombre))
+                .findFirst().orElse(null);
+
+        if (origen == null || destino == null) {
+            return; // o mostrar alerta
+        }
+
+        //Deshabilitamos los botones
+        btnDijkstra.setEnabled(false);
+        btnBellman.setEnabled(false);
+        btnVolver.setEnabled(false);
+
+        //Lanzamos el hilo
+        new Thread(() -> {
+            try {
+                VisualizadorUtils.reiniciarGrafo(grafoVisual);
+                Dijkstra.ejecutar(grafoLogico, origen, destino, grafoVisual);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                // 👉 Y aquí los vuelves a habilitar en el hilo de Swing
+                SwingUtilities.invokeLater(() -> {
+                    btnDijkstra.setEnabled(true);
+                    btnBellman.setEnabled(true);
+                    btnVolver.setEnabled(true);
+                });
+            }
+        }).start();
+
     }//GEN-LAST:event_btnBellmanActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -109,14 +197,92 @@ public class MenuRutaCorta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDijkstraActionPerformed
-        // TODO add your handling code here:
+        //Obtenemos el origen y el destino seleccionado
+        String origenNombre = (String) ComboBoxOrigen.getSelectedItem();
+        String destinoNombre = (String) ComboBoxDestino.getSelectedItem();
+
+        //Convertimos a objectos "Localidad"
+        Localidad origen = grafoLogico.getLocalidades().stream()
+                .filter(l -> l.getNombre().equals(origenNombre))
+                .findFirst().orElse(null);
+
+        Localidad destino = grafoLogico.getLocalidades().stream()
+                .filter(l -> l.getNombre().equals(destinoNombre))
+                .findFirst().orElse(null);
+
+        if (origen == null || destino == null) {
+            return; // o mostrar alerta
+        }
+
+        //Deshabilitamos los botones
+        btnDijkstra.setEnabled(false);
+        btnBellman.setEnabled(false);
+        btnVolver.setEnabled(false);
+
+        //Lanzamos el hilo
+        new Thread(() -> {
+            try {
+                VisualizadorUtils.reiniciarGrafo(grafoVisual);
+                Dijkstra.ejecutar(grafoLogico, origen, destino, grafoVisual);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                // 👉 Y aquí los vuelves a habilitar en el hilo de Swing
+                SwingUtilities.invokeLater(() -> {
+                    btnDijkstra.setEnabled(true);
+                    btnBellman.setEnabled(true);
+                    btnVolver.setEnabled(true);
+                });
+            }
+        }).start();
+
     }//GEN-LAST:event_btnDijkstraActionPerformed
 
+    private void ComboBoxOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxOrigenActionPerformed
+        String origenSeleccionado = (String) ComboBoxOrigen.getSelectedItem();
+
+        ComboBoxDestino.removeAllItems();
+
+        for (Localidad loc : grafoLogico.getLocalidades()) {
+            if (!loc.getNombre().equals(origenSeleccionado)) {
+                ComboBoxDestino.addItem(loc.getNombre());
+            }
+        }
+    }//GEN-LAST:event_ComboBoxOrigenActionPerformed
+
+    private void ComboBoxDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxDestinoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboBoxDestinoActionPerformed
+
+    private void llenarComboBoxes() {
+        ComboBoxOrigen.removeAllItems();
+        ComboBoxDestino.removeAllItems();
+
+        for (Localidad loc : grafoLogico.getLocalidades()) {
+            ComboBoxOrigen.addItem(loc.getNombre());
+            ComboBoxDestino.addItem(loc.getNombre());
+        }
+    }
+
+//    private void mostrarGrafo() {
+//        jPanel1.setLayout(new BorderLayout());
+//        Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+//        viewer.enableAutoLayout();
+//        View view = viewer.addDefaultView(false);
+//        jPanel1.add((Component) view, BorderLayout.CENTER);
+//        jPanel1.revalidate();
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboBoxDestino;
+    private javax.swing.JComboBox<String> ComboBoxOrigen;
     private javax.swing.JButton btnBellman;
     private javax.swing.JButton btnDijkstra;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
