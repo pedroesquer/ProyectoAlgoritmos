@@ -110,6 +110,7 @@ public class MenuMST extends javax.swing.JFrame {
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         ControladorVisual.getInstancia().menuPrincipalVisible();
+        this.setVisible(false);
     }//GEN-LAST:event_btnVolverActionPerformed
 
 
