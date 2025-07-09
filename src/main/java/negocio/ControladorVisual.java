@@ -1,5 +1,6 @@
 package negocio;
 
+import base.Grafo;
 import presentacion.PantallaKruskal;
 import presentacion.MenuMST;
 import presentacion.MenuRutaCorta;
@@ -7,6 +8,7 @@ import presentacion.PantallaBoruvka;
 import presentacion.PantallaPrim;
 import presentacion.Recorridos;
 import presentacion.MenuPrincipal;
+import presentacion.Matriz;
 
 /**
  *
@@ -25,41 +27,46 @@ public class ControladorVisual {
         }
         return instancia;
     }
-    
-    public void abrirPantallaRecorridos(){
+
+    public void abrirPantallaRecorridos() {
         Recorridos frameRecorridos = new Recorridos();
         frameRecorridos.setVisible(true);
     }
-    
-    public void menuPrincipalVisible(){
+
+    public void menuPrincipalVisible() {
         MenuPrincipal menu = new MenuPrincipal();
         menu.setVisible(true);
     }
-    
-    public void abrirPantallaMenuMST(){
+
+    public void abrirPantallaMenuMST() {
         MenuMST menuMST = new MenuMST();
         menuMST.setVisible(true);
     }
-    
-    public void abrirPantallaKruskal(){
+
+    public void abrirPantallaKruskal() {
         PantallaKruskal kruskal = new PantallaKruskal();
         kruskal.setVisible(true);
     }
-    
-    public void abrirPantallaPrim(){
+
+    public void abrirPantallaPrim() {
         PantallaPrim prim = new PantallaPrim();
         prim.setVisible(true);
     }
-    
-    public void abrirPantallaBoruvka(){
+
+    public void abrirPantallaBoruvka() {
         PantallaBoruvka boruvka = new PantallaBoruvka();
         boruvka.setVisible(true);
     }
-    
-    public void abrirRutaMasCorta(){
+
+    public void abrirRutaMasCorta() {
         MenuRutaCorta rc = new MenuRutaCorta();
         rc.setVisible(true);
     }
-    
-    
+
+    public void abrirTablaGrafo(Grafo grafo) {
+        Matriz matriz = new Matriz(grafo);
+        matriz.setVisible(true);
+
+    }
+
 }

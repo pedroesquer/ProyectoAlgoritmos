@@ -65,8 +65,8 @@ public class Recorridos extends javax.swing.JFrame {
         pnlPrincipal = new javax.swing.JPanel();
         pnlGrafo = new javax.swing.JPanel();
         btnDFS = new javax.swing.JButton();
-        btnBFS = new javax.swing.JButton();
         lblRecorrido = new javax.swing.JLabel();
+        btnBFS = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         lblAlgoritmo = new javax.swing.JLabel();
 
@@ -98,6 +98,10 @@ public class Recorridos extends javax.swing.JFrame {
         });
         pnlPrincipal.add(btnDFS, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 560, 100, 50));
 
+        lblRecorrido.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblRecorrido.setText("Recorridos");
+        pnlPrincipal.add(lblRecorrido, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 10, -1, -1));
+
         btnBFS.setText("BFS");
         btnBFS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,10 +109,6 @@ public class Recorridos extends javax.swing.JFrame {
             }
         });
         pnlPrincipal.add(btnBFS, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 560, 100, 50));
-
-        lblRecorrido.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblRecorrido.setText("Recorridos");
-        pnlPrincipal.add(lblRecorrido, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 10, -1, -1));
 
         btnVolver.setText("Volver");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {

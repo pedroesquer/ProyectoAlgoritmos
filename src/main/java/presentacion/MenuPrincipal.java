@@ -4,6 +4,8 @@
  */
 package presentacion;
 
+import base.Grafo;
+import negocio.ControladorGrafo;
 import negocio.ControladorVisual;
 
 /**
@@ -12,8 +14,10 @@ import negocio.ControladorVisual;
  */
 public class MenuPrincipal extends javax.swing.JFrame {
 
+    private final Grafo grafoLogico = ControladorGrafo.getGrafo();
+
     /**
-     * Creates new form menuyo
+     * Creates new form menu
      */
     public MenuPrincipal() {
         initComponents();
@@ -110,8 +114,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVisualizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizacionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVisualizacionActionPerformed
+        ControladorVisual.getInstancia().abrirTablaGrafo(grafoLogico);    }//GEN-LAST:event_btnVisualizacionActionPerformed
 
     private void btnRecorridosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecorridosActionPerformed
         ControladorVisual.getInstancia().abrirPantallaRecorridos();
