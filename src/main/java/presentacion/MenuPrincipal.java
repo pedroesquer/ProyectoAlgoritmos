@@ -21,6 +21,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     public MenuPrincipal() {
         initComponents();
+        setTitle("Guanajuato");
         setSize(1080, 720);
         setLocationRelativeTo(null);
     }

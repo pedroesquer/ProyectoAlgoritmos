@@ -5,10 +5,12 @@
 package presentacion;
 
 import algoritmos.Boruvka;
+import base.Carretera;
 import base.Grafo;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
@@ -62,6 +64,7 @@ public class PantallaBoruvka extends javax.swing.JFrame {
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Borůvka");
         setMaximumSize(new java.awt.Dimension(1080, 720));
         setResizable(false);
 
@@ -138,12 +141,30 @@ public class PantallaBoruvka extends javax.swing.JFrame {
         protected Void doInBackground() throws Exception {
             ResultadoMST resultado = Boruvka.ejecutar(grafoLogico, grafoVisual);
 
+            double peso = resultado.getPesoTotal();
+            List<Carretera> aristas = resultado.getAristasSeleccionadas();
+
+            StringBuilder mensaje = new StringBuilder();
+            mensaje.append("Árbol de Expansión Mínima (MST):\n\n");
+
+            for (Carretera c : aristas) {
+                mensaje.append("- ")
+                       .append(c.getOrigen().getNombre())
+                       .append(" ⇄ ")
+                       .append(c.getDestino().getNombre())
+                       .append(" (")
+                       .append(c.getPeso())
+                       .append(" km)\n");
+            }
+
+            mensaje.append("\nPeso total: ").append(peso).append(" km");
+
             SwingUtilities.invokeLater(() -> {
                 JOptionPane.showMessageDialog(PantallaBoruvka.this,
-                        "Peso total del Árbol de Expansión Mínima: " + resultado.getPesoTotal() + " km",
+                        mensaje.toString(),
                         "Resultado Borůvka", JOptionPane.INFORMATION_MESSAGE);
             });
-
+            
             return null;
         }
     };

@@ -5,11 +5,13 @@
 package presentacion;
 
 import algoritmos.Prim;
+import base.Carretera;
 import base.Grafo;
 import base.Localidad;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import negocio.ControladorGrafo;
@@ -41,15 +43,15 @@ public class PantallaPrim extends javax.swing.JFrame {
         }
         
         setLocationRelativeTo(null);
-        jPanel2.setLayout(new BorderLayout());
-        jPanel2.setPreferredSize(new Dimension(940, 500));
-        jPanel2.setMinimumSize(new Dimension(940,500));
+        panel.setLayout(new BorderLayout());
+        panel.setPreferredSize(new Dimension(940, 500));
+        panel.setMinimumSize(new Dimension(940,500));
         
         Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         viewer.enableAutoLayout();
         View view = viewer.addDefaultView(false);
-        jPanel2.add((Component) view, BorderLayout.CENTER);
-        jPanel2.revalidate();
+        panel.add((Component) view, BorderLayout.CENTER);
+        panel.revalidate();
     }
 
     /**
@@ -64,12 +66,12 @@ public class PantallaPrim extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
         btnEjecutar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        panel = new javax.swing.JPanel();
         cmbOrigen = new javax.swing.JComboBox<>();
         lblOrigen = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1080, 720));
+        setTitle("Prim");
         setResizable(false);
 
         lblTitulo.setFont(new java.awt.Font("Ebrima", 1, 36)); // NOI18N
@@ -91,14 +93,14 @@ public class PantallaPrim extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 939, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 477, Short.MAX_VALUE)
         );
 
@@ -133,7 +135,7 @@ public class PantallaPrim extends javax.swing.JFrame {
                             .addComponent(btnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(488, 488, 488))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(67, 67, 67))))
         );
         layout.setVerticalGroup(
@@ -149,7 +151,7 @@ public class PantallaPrim extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEjecutar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -177,10 +179,26 @@ public class PantallaPrim extends javax.swing.JFrame {
 
                 if (localidadInicio != null) {
                     ResultadoMST resultado = Prim.ejecutar(grafoLogico, grafoVisual, localidadInicio);
-                    System.out.println("Peso total del MST: " + resultado.getPesoTotal() + " km");
-                    JOptionPane.showMessageDialog(this, "Peso total del MST: " + resultado.getPesoTotal() + " km", 
-                              "Resultado de Prim", JOptionPane.INFORMATION_MESSAGE);
+                    double peso = resultado.getPesoTotal();
+                    List<Carretera> aristas = resultado.getAristasSeleccionadas();
 
+                    StringBuilder mensaje = new StringBuilder();
+                    mensaje.append("Árbol de Expansión Mínima (MST):\n\n");
+
+                    for (Carretera c : aristas) {
+                        mensaje.append("- ")
+                               .append(c.getOrigen().getNombre())
+                               .append(" ⇄ ")
+                               .append(c.getDestino().getNombre())
+                               .append(" (")
+                               .append(c.getPeso())
+                               .append(" km)\n");
+                    }
+
+                    mensaje.append("\nPeso total: ").append(peso).append(" km");
+
+                    JOptionPane.showMessageDialog(this, mensaje.toString(), "Resultado de Prim", JOptionPane.INFORMATION_MESSAGE);
+                    
                 } 
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -205,8 +223,8 @@ public class PantallaPrim extends javax.swing.JFrame {
     private javax.swing.JButton btnEjecutar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cmbOrigen;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblOrigen;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
 }

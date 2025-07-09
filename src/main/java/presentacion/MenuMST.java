@@ -12,12 +12,11 @@ import negocio.ControladorVisual;
  */
 public class MenuMST extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MenuMST2
-     */
+    
     public MenuMST() {
         initComponents();
         setSize(1080, 720);
+        setTitle("Menú MST");
         setLocationRelativeTo(null);
     }
 

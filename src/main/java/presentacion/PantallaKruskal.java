@@ -4,10 +4,12 @@
  */
 package presentacion;
 
+import base.Carretera;
 import base.Grafo;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import negocio.ControladorGrafo;
@@ -62,6 +64,7 @@ public class PantallaKruskal extends javax.swing.JFrame {
         btnEjecutar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Kruskal");
         setMaximumSize(new java.awt.Dimension(700, 500));
         setResizable(false);
 
@@ -174,10 +177,26 @@ public class PantallaKruskal extends javax.swing.JFrame {
                         try {
                             ResultadoMST resultado = algoritmos.Kruskal.ejecutar(grafoLogico, grafoVisual);
                             double peso = resultado.getPesoTotal();
-                            SwingUtilities.invokeLater(() ->
-                                    JOptionPane.showMessageDialog(this, "Peso total del MST: " + peso + " km",
-                                            "Resultado de Kruskal", JOptionPane.INFORMATION_MESSAGE)
-                            );
+                            
+                            List<Carretera> aristas = resultado.getAristasSeleccionadas();
+
+                            StringBuilder mensaje = new StringBuilder();
+                            mensaje.append("Árbol de Expansión Mínima (MST):\n\n");
+
+                            for (Carretera c : aristas) {
+                                mensaje.append("- ")
+                                       .append(c.getOrigen().getNombre())
+                                       .append(" ⇄ ")
+                                       .append(c.getDestino().getNombre())
+                                       .append(" (")
+                                       .append(c.getPeso())
+                                       .append(" km)\n");
+                            }
+
+                            mensaje.append("\nPeso total: ").append(peso).append(" km");
+                            
+                            JOptionPane.showMessageDialog(this, mensaje.toString(), "Resultado de Kruskal", JOptionPane.INFORMATION_MESSAGE);
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         } finally {
