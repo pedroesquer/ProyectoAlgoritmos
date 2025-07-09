@@ -16,6 +16,7 @@ import visualizacion.VisualizadorGrafo;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.util.Comparator;
 import javax.swing.BoxLayout;
 import javax.swing.SwingUtilities;
 import negocio.ControladorVisual;
@@ -247,10 +248,12 @@ public class MenuRutaCorta extends javax.swing.JFrame {
         //Convertimos a objectos "Localidad"
         Localidad origen = grafoLogico.getLocalidades().stream()
                 .filter(l -> l.getNombre().equals(origenNombre))
+                .sorted(Comparator.comparing(Localidad::getNombre))
                 .findFirst().orElse(null);
 
         Localidad destino = grafoLogico.getLocalidades().stream()
                 .filter(l -> l.getNombre().equals(destinoNombre))
+                .sorted(Comparator.comparing(Localidad::getNombre))
                 .findFirst().orElse(null);
 
         if (origen == null || destino == null) {

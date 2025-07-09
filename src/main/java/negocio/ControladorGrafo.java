@@ -6,7 +6,7 @@ import base.Localidad;
 import java.util.List;
 
 /**
- * 
+ *
  * @author Pedro, Christopher y Katia
  */
 public class ControladorGrafo {
@@ -42,18 +42,20 @@ public class ControladorGrafo {
         Localidad salvatierra = new Localidad("Salvatierra");
         Localidad marfil = new Localidad("Marfil");
         Localidad sfelipe = new Localidad("San Felipe");
-        Localidad apaseo = new Localidad("Apaseo");
+        Localidad apaseog = new Localidad("Apaseo el Grande");
+        Localidad apaseoa = new Localidad("Apaseo el Alto");
+        Localidad abasolo = new Localidad("Abasolo");
         Localidad villagran = new Localidad("Villagrán");
         Localidad sjiturbide = new Localidad("S.J. Iturbide");
         Localidad yuriria = new Localidad("Yuriria");
         Localidad romita = new Localidad("Romita");
         Localidad comonfort = new Localidad("Comonfort");
-        Localidad jaral = new Localidad("Jaral");
+        Localidad jaral = new Localidad("Jaral del Progreso");
 
         // Agregar localidades al grafo
         List<Localidad> todas = List.of(leon, irapuato, celaya, salamanca, silao, sfrincon, vdesantiago, sma, gto, cortazar,
                 dolores, acambaro, purisima, uriangato, slpaz, jrosas, penjamo, moroleon, salvatierra, marfil, sfelipe,
-                apaseo, villagran, sjiturbide, yuriria, romita, comonfort, jaral);
+                apaseog, apaseoa, abasolo, villagran, sjiturbide, yuriria, romita, comonfort, jaral);
 
         todas.forEach(grafo::agregarLocalidad);
 
@@ -63,6 +65,8 @@ public class ControladorGrafo {
         grafo.agregarCarretera(new Carretera(sfrincon, purisima, 7));
         grafo.agregarCarretera(new Carretera(leon, romita, 22));
         grafo.agregarCarretera(new Carretera(romita, irapuato, 25));
+        grafo.agregarCarretera(new Carretera(romita, abasolo, 20));
+        grafo.agregarCarretera(new Carretera(abasolo, irapuato, 18));
         grafo.agregarCarretera(new Carretera(silao, gto, 28));
         grafo.agregarCarretera(new Carretera(gto, marfil, 7));
         grafo.agregarCarretera(new Carretera(gto, dolores, 45));
@@ -83,12 +87,16 @@ public class ControladorGrafo {
         grafo.agregarCarretera(new Carretera(moroleon, salvatierra, 25));
         grafo.agregarCarretera(new Carretera(salvatierra, jaral, 28));
         grafo.agregarCarretera(new Carretera(jaral, celaya, 20));
-        grafo.agregarCarretera(new Carretera(jrosas, apaseo, 25));
-        grafo.agregarCarretera(new Carretera(apaseo, celaya, 15));
+        grafo.agregarCarretera(new Carretera(jrosas, apaseog, 25));
+        grafo.agregarCarretera(new Carretera(apaseog, celaya, 15));
+        grafo.agregarCarretera(new Carretera(apaseog, apaseoa, 10));
         grafo.agregarCarretera(new Carretera(jrosas, sjiturbide, 35));
         grafo.agregarCarretera(new Carretera(sjiturbide, slpaz, 30));
         grafo.agregarCarretera(new Carretera(marfil, sfelipe, 36));
+        grafo.agregarCarretera(new Carretera(comonfort, apaseog, 22));
+        grafo.agregarCarretera(new Carretera(jaral, vdesantiago, 17));
 
         return grafo;
     }
+
 }

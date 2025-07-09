@@ -1,9 +1,8 @@
 package negocio;
 
 import presentacion.PantallaKruskal;
-import presentacion.Menu2;
-import presentacion.MenuMST;
 import presentacion.MenuPrincipal;
+import presentacion.MenuMST;
 import presentacion.MenuRutaCorta;
 import presentacion.PantallaBoruvka;
 import presentacion.PantallaPrim;
@@ -33,7 +32,7 @@ public class ControladorVisual {
     }
     
     public void menuPrincipalVisible(){
-        Menu2 menu = new Menu2();
+        MenuPrincipal menu = new MenuPrincipal();
         menu.setVisible(true);
     }
     
