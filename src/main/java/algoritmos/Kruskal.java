@@ -77,8 +77,7 @@ public class Kruskal {
     }
 
     /**
-     * Encuentra la raíz del conjunto al que pertenece una localidad, usando 
-     * compresión de caminos.
+     * Encuentra la raíz del conjunto al que pertenece una localidad.
      * @param padre Mapa que representa los conjuntos disjuntos.
      * @param x Localidad de la que se desea encontrar la raíz de su conjunto.
      * @return La raíz del conjunto al que pertenece la localidad.
