@@ -1,12 +1,12 @@
 package negocio;
 
 import presentacion.PantallaKruskal;
-import presentacion.MenuPrincipal;
 import presentacion.MenuMST;
 import presentacion.MenuRutaCorta;
 import presentacion.PantallaBoruvka;
 import presentacion.PantallaPrim;
 import presentacion.Recorridos;
+import presentacion.MenuPrincipal;
 
 /**
  *

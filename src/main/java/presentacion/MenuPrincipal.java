@@ -8,15 +8,16 @@ import negocio.ControladorVisual;
 
 /**
  *
- * @author Pedro, Christopher y Katia
+ * @author katia
  */
 public class MenuPrincipal extends javax.swing.JFrame {
 
     /**
-     * Creates new form Menu2
+     * Creates new form menuyo
      */
     public MenuPrincipal() {
         initComponents();
+        setSize(1080, 720);
         setLocationRelativeTo(null);
     }
 
@@ -29,103 +30,98 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        btnVisualizacion = new javax.swing.JButton();
         btnRecorridos = new javax.swing.JButton();
-        btnArbol = new javax.swing.JButton();
+        btnArboles = new javax.swing.JButton();
         btnRutas = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(700, 500));
-        setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("Ebrima", 1, 70)); // NOI18N
-        jLabel1.setText("Guanajuato");
+        lblTitulo.setFont(new java.awt.Font("Times New Roman", 0, 110)); // NOI18N
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setText("Guanajuato");
+        lblTitulo.setBorder(javax.swing.BorderFactory.createEmptyBorder(40, 1, 1, 1));
+        getContentPane().add(lblTitulo, java.awt.BorderLayout.PAGE_START);
 
-        btnRecorridos.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
-        btnRecorridos.setText("1. Recorridos.");
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(80, 80, 80, 80));
+        jPanel1.setLayout(new java.awt.GridLayout(3, 2, 40, 30));
+
+        btnVisualizacion.setFont(new java.awt.Font("Times New Roman", 0, 30)); // NOI18N
+        btnVisualizacion.setText("1. Visualización del grafo");
+        btnVisualizacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVisualizacionActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnVisualizacion);
+
+        btnRecorridos.setFont(new java.awt.Font("Times New Roman", 0, 30)); // NOI18N
+        btnRecorridos.setText("2. Recorridos");
         btnRecorridos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRecorridosActionPerformed(evt);
             }
         });
+        jPanel1.add(btnRecorridos);
 
-        btnArbol.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
-        btnArbol.setText("2. Árbol de Expansión Mínima.");
-        btnArbol.addActionListener(new java.awt.event.ActionListener() {
+        btnArboles.setFont(new java.awt.Font("Times New Roman", 0, 30)); // NOI18N
+        btnArboles.setText("3. Árbol de Expansión Mínima");
+        btnArboles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnArbolActionPerformed(evt);
+                btnArbolesActionPerformed(evt);
             }
         });
+        jPanel1.add(btnArboles);
 
-        btnRutas.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
-        btnRutas.setText("3. Rutas más cortas.");
+        btnRutas.setFont(new java.awt.Font("Times New Roman", 0, 30)); // NOI18N
+        btnRutas.setText("4. Rutas más cortas");
         btnRutas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRutasActionPerformed(evt);
             }
         });
+        jPanel1.add(btnRutas);
 
-        btnReportes.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
-        btnReportes.setText("4. Reportes de complejidad.");
+        btnReportes.setFont(new java.awt.Font("Times New Roman", 0, 30)); // NOI18N
+        btnReportes.setText("5. Reportes de complejidad");
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnReportes);
 
-        btnSalir.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
-        btnSalir.setText("5. Salir.");
+        btnSalir.setFont(new java.awt.Font("Times New Roman", 0, 30)); // NOI18N
+        btnSalir.setText("6. Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
             }
         });
+        jPanel1.add(btnSalir);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRutas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRecorridos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnArbol, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE))
-                .addGap(187, 187, 187))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(159, 159, 159)
-                .addComponent(jLabel1)
-                .addContainerGap(160, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addGap(32, 32, 32)
-                .addComponent(btnRecorridos)
-                .addGap(28, 28, 28)
-                .addComponent(btnArbol)
-                .addGap(29, 29, 29)
-                .addComponent(btnRutas)
-                .addGap(30, 30, 30)
-                .addComponent(btnReportes)
-                .addGap(33, 33, 33)
-                .addComponent(btnSalir)
-                .addContainerGap(79, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnVisualizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVisualizacionActionPerformed
 
     private void btnRecorridosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecorridosActionPerformed
         ControladorVisual.getInstancia().abrirPantallaRecorridos();
         this.setVisible(false);
     }//GEN-LAST:event_btnRecorridosActionPerformed
 
-    private void btnArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArbolActionPerformed
+    private void btnArbolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArbolesActionPerformed
         ControladorVisual.getInstancia().abrirPantallaMenuMST();
         this.setVisible(false);
-    }//GEN-LAST:event_btnArbolActionPerformed
+    }//GEN-LAST:event_btnArbolesActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
@@ -135,6 +131,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
         ControladorVisual.getInstancia().abrirRutaMasCorta();
         this.dispose();
     }//GEN-LAST:event_btnRutasActionPerformed
+
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReportesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,6 +163,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -173,11 +175,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnArbol;
+    private javax.swing.JButton btnArboles;
     private javax.swing.JButton btnRecorridos;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnRutas;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnVisualizacion;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
 }

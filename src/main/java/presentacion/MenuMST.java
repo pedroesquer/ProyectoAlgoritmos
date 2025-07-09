@@ -8,15 +8,16 @@ import negocio.ControladorVisual;
 
 /**
  *
- * @author Pedro, Christopher y Katia
+ * @author katia
  */
 public class MenuMST extends javax.swing.JFrame {
 
     /**
-     * Creates new form MenuMST
+     * Creates new form MenuMST2
      */
     public MenuMST() {
         initComponents();
+        setSize(1080, 720);
         setLocationRelativeTo(null);
     }
 
@@ -29,86 +30,61 @@ public class MenuMST extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         btnKruskal = new javax.swing.JButton();
         btnPrim = new javax.swing.JButton();
         btnBoruvka = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(700, 500));
-        setMinimumSize(new java.awt.Dimension(700, 500));
-        setPreferredSize(new java.awt.Dimension(700, 500));
-        setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("Ebrima", 1, 45)); // NOI18N
-        jLabel1.setText("Árbol de Expansión Mínima");
+        lblTitulo.setFont(new java.awt.Font("Times New Roman", 0, 60)); // NOI18N
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setText("Árbol de Expansión Mínima");
+        lblTitulo.setBorder(javax.swing.BorderFactory.createEmptyBorder(40, 1, 1, 1));
+        getContentPane().add(lblTitulo, java.awt.BorderLayout.PAGE_START);
 
-        btnKruskal.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
-        btnKruskal.setText("Kruskal");
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(60, 100, 100, 100));
+        jPanel1.setLayout(new java.awt.GridLayout(2, 2, 40, 30));
+
+        btnKruskal.setFont(new java.awt.Font("Times New Roman", 0, 30)); // NOI18N
+        btnKruskal.setText("1. Kruskal");
         btnKruskal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnKruskalActionPerformed(evt);
             }
         });
+        jPanel1.add(btnKruskal);
 
-        btnPrim.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
-        btnPrim.setText("Prim");
+        btnPrim.setFont(new java.awt.Font("Times New Roman", 0, 30)); // NOI18N
+        btnPrim.setText("2. Prim");
         btnPrim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPrimActionPerformed(evt);
             }
         });
+        jPanel1.add(btnPrim);
 
-        btnBoruvka.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
-        btnBoruvka.setText("Boruvka ");
+        btnBoruvka.setFont(new java.awt.Font("Times New Roman", 0, 30)); // NOI18N
+        btnBoruvka.setText("3. Borůvka");
         btnBoruvka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBoruvkaActionPerformed(evt);
             }
         });
+        jPanel1.add(btnBoruvka);
 
-        btnVolver.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
-        btnVolver.setText("Volver");
+        btnVolver.setFont(new java.awt.Font("Times New Roman", 0, 30)); // NOI18N
+        btnVolver.setText("4. Volver");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVolverActionPerformed(evt);
             }
         });
+        jPanel1.add(btnVolver);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(214, 214, 214)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnPrim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnKruskal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnBoruvka, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-                            .addComponent(btnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(66, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addGap(38, 38, 38)
-                .addComponent(btnKruskal)
-                .addGap(38, 38, 38)
-                .addComponent(btnPrim)
-                .addGap(36, 36, 36)
-                .addComponent(btnBoruvka)
-                .addGap(46, 46, 46)
-                .addComponent(btnVolver)
-                .addContainerGap(97, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -117,11 +93,6 @@ public class MenuMST extends javax.swing.JFrame {
         ControladorVisual.getInstancia().abrirPantallaKruskal();
         this.setVisible(false);
     }//GEN-LAST:event_btnKruskalActionPerformed
-
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        ControladorVisual.getInstancia().menuPrincipalVisible();
-        this.setVisible(false);
-    }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnPrimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimActionPerformed
         ControladorVisual.getInstancia().abrirPantallaPrim();
@@ -133,14 +104,53 @@ public class MenuMST extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnBoruvkaActionPerformed
 
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        ControladorVisual.getInstancia().menuPrincipalVisible();
+        this.setVisible(false);
+    }//GEN-LAST:event_btnVolverActionPerformed
 
-    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MenuMST.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MenuMST.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MenuMST.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MenuMST.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MenuMST().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBoruvka;
     private javax.swing.JButton btnKruskal;
     private javax.swing.JButton btnPrim;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
 }
