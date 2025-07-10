@@ -9,6 +9,7 @@ import presentacion.PantallaPrim;
 import presentacion.Recorridos;
 import presentacion.MenuPrincipal;
 import presentacion.Matriz;
+import presentacion.Reportes;
 
 /**
  *
@@ -67,6 +68,11 @@ public class ControladorVisual {
         Matriz matriz = new Matriz(grafo);
         matriz.setVisible(true);
 
+    }
+    
+    public void abrirReportes(){
+        Reportes rep = new Reportes();
+        rep.setVisible(true);
     }
 
 }

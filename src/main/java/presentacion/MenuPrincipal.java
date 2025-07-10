@@ -137,7 +137,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRutasActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
-        // TODO add your handling code here:
+        ControladorVisual.getInstancia().abrirReportes();
     }//GEN-LAST:event_btnReportesActionPerformed
 
     /**
