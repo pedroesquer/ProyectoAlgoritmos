@@ -13,6 +13,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -25,6 +26,7 @@ import resultados.ResultadoBFS;
 import visualizacion.VisualizadorGrafo;
 import visualizacion.VisualizadorUtils;
 import org.graphstream.ui.view.Viewer;
+import resultados.ResultadoDFS;
 
 /**
  *
@@ -191,8 +193,15 @@ public class Recorridos extends javax.swing.JFrame {
                         Thread.sleep(500);
 
                         // Ejecuta el algoritmo BFS con la localidad origen y el grafo visual.
-                        BFS.ejecutar(grafoLogico, origen, grafoVisual);
+                        ResultadoBFS resultado2 = BFS.ejecutar(grafoLogico, origen, grafoVisual);
+                        String texto = "=== Predecesores ===\n\n";
 
+                        for (Map.Entry<Localidad, Localidad> entrada : resultado2.getPredecesores().entrySet()) {
+                            texto += "Localidad: " + entrada.getKey().getNombre()
+                                    + " <- Predecesor: " + entrada.getValue().getNombre() + "\n";
+                        }
+
+                        JOptionPane.showMessageDialog(null, texto, "Resultado BFS", JOptionPane.INFORMATION_MESSAGE);
                     } catch (InterruptedException e) {
                         // Manejo de excepción si el hilo es interrumpido.
                         e.printStackTrace();
@@ -203,6 +212,7 @@ public class Recorridos extends javax.swing.JFrame {
                     }
                 }).start(); // Inicia el hilo
             }
+
         }
 
      }//GEN-LAST:event_btnBFSActionPerformed
@@ -237,7 +247,14 @@ public class Recorridos extends javax.swing.JFrame {
                     Thread.sleep(500);
 
                     // Ejecuta el algoritmo DFS con el grafo lógico, la localidad origen y el grafo visual.
-                    DFS.ejecutar(grafoLogico, origen, grafoVisual);
+                    ResultadoDFS resultado2 = DFS.ejecutar(grafoLogico, origen, grafoVisual);
+                    String texto = "=== Predecesores ===\n\n";
+
+                    for (Map.Entry<Localidad, Localidad> entrada : resultado2.getPredecesores().entrySet()) {
+                        texto += "Localidad: " + entrada.getKey().getNombre()
+                                + " <- Predecesor: " + entrada.getValue().getNombre() + "\n";
+                    }
+                    JOptionPane.showMessageDialog(null, texto, "Resultado BFS", JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (InterruptedException e) {
                     // Maneja cualquier interrupción del hilo.

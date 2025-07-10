@@ -4,6 +4,7 @@ import base.Grafo;
 import base.Localidad;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
@@ -28,7 +29,7 @@ public class DFS {
      * @return ResultadoDFS con predecesores y orden de visita.
      */
     public static ResultadoDFS ejecutar(Grafo grafo, Localidad origen, Graph grafoVisual) {
-        Map<Localidad, Localidad> predecesores = new HashMap<>();
+        Map<Localidad, Localidad> predecesores = new LinkedHashMap<>();
         Set<Localidad> visitados = new HashSet<>();
         Stack<Localidad> pila = new Stack<>();
 

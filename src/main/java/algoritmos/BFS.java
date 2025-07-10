@@ -8,6 +8,7 @@ import base.Grafo;
 import base.Localidad;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
@@ -16,20 +17,21 @@ import org.graphstream.graph.Graph;
 import resultados.ResultadoBFS;
 import visualizacion.VisualizadorUtils;
 
-
 public class BFS {
 
     /**
-     * Ejecuta el algoritmo BFS sobre un grafo lógico, desde una localidad inicial,
-     * y visualiza el árbol de expansión sobre el grafo visual.
+     * Ejecuta el algoritmo BFS sobre un grafo lógico, desde una localidad
+     * inicial, y visualiza el árbol de expansión sobre el grafo visual.
+     *
      * @param grafo El grafo lógico con las localidades y aristas.
      * @param origen La localidad desde donde se inicia el recorrido.
-     * @param grafoVisual El grafo visual de GraphStream para pintar nodos y aristas.
+     * @param grafoVisual El grafo visual de GraphStream para pintar nodos y
+     * aristas.
      * @return Objeto con las distancias y predecesores para reconstruir rutas.
      */
     public static ResultadoBFS ejecutar(Grafo grafo, Localidad origen, Graph grafoVisual) {
-        Map<Localidad, Integer> distancias = new HashMap<>();
-        Map<Localidad, Localidad> predecesores = new HashMap<>();
+        Map<Localidad, Integer> distancias = new LinkedHashMap<>();
+        Map<Localidad, Localidad> predecesores = new LinkedHashMap<>();
         Queue<Localidad> cola = new LinkedList<>();
         Set<Localidad> visitados = new HashSet<>();
 
@@ -63,7 +65,6 @@ public class BFS {
                 }
             }
         }
-
         return new ResultadoBFS(distancias, predecesores);
     }
 }
