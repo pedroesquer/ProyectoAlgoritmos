@@ -21,8 +21,7 @@ import visualizacion.VisualizadorUtils;
 public class Dijkstra {
 
     /**
-     * Ejecuta el algoritmo de Dijkstra para encontrar la ruta más corta entre
-     * dos localidades. Este método considera un grafo no dirigido.
+     * Ejecuta el algoritmo de Dijkstra para encontrar la ruta más corta entre  
      *
      * @param grafo Grafo lógico con las localidades y carreteras
      * @param origen Localidad de inicio
@@ -39,20 +38,18 @@ public class Dijkstra {
         // Cola de prioridad que ordena por distancia mínima (menor primero)
         PriorityQueue<Localidad> cola = new PriorityQueue<>(Comparator.comparingDouble(distancias::get));
 
-        // Inicializa todas las distancias como infinito
+        
         for (Localidad l : grafo.getLocalidades()) {
             distancias.put(l, Double.POSITIVE_INFINITY);
         }
-
-        // La distancia al origen es cero
         distancias.put(origen, 0.0);
         cola.add(origen);
+        
 
-        // Bucle principal de Dijkstra
+        
         while (!cola.isEmpty()) {
             Localidad actual = cola.poll(); // Se toma la localidad con menor distancia estimada
 
-            // Si ya fue visitado, se ignora
             if (!visitados.add(actual)) {
                 continue;
             }

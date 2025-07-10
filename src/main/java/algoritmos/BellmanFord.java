@@ -31,16 +31,15 @@ public class BellmanFord {
         Map<Localidad, Double> distancias = new HashMap<>();
         Map<Localidad, Localidad> anteriores = new HashMap<>();
 
-        //Inicializamos todas las distancias a infinito menos el origen
+        
         for (Localidad l : grafo.getLocalidades()) {
             distancias.put(l, Double.POSITIVE_INFINITY);
         }
         distancias.put(origen, 0.0);
-
         int V = grafo.getLocalidades().size();
 
 
-        //Relajamos todas las aristas menos 1 (se relaja dos veces por ser no dirigido)
+        //Relajacion
         
         for (int i = 0; i < V - 1; i++) {
             for (Carretera c : grafo.getCarreteras()) {
@@ -48,13 +47,13 @@ public class BellmanFord {
                 Localidad v = c.getDestino();
                 double peso = c.getPeso();
 
-                // Primera relajacion u → v
+                
                 if (distancias.get(u) + peso < distancias.get(v)) {
                     distancias.put(v, distancias.get(u) + peso);
                     anteriores.put(v, u);
                 }
 
-                // Segunda relajacio v → u 
+                
                 if (distancias.get(v) + peso < distancias.get(u)) {
                     distancias.put(u, distancias.get(v) + peso);
                     anteriores.put(u, v);
@@ -68,7 +67,7 @@ public class BellmanFord {
             Localidad v = c.getDestino();
             double peso = c.getPeso();
 
-            //Si si encuentra un cilco negativo arrojamos exception
+            
             if (distancias.get(u) + peso < distancias.get(v) || distancias.get(v) + peso < distancias.get(u)) {
                 throw new RuntimeException("El grafo contiene un ciclo de peso negativo");
             }
@@ -85,7 +84,7 @@ public class BellmanFord {
             actual = anteriores.get(actual); // Saltamos al nodo anterior en el camino
         }
 
-        //Visualizar el camino encontrado paso a paso
+        //Visualizar el camino
         for (int i = 0; i < camino.size() - 1; i++) {
             Localidad u = camino.get(i);
             Localidad v = camino.get(i + 1);
