@@ -2,66 +2,67 @@ package algoritmos;
 
 import base.Grafo;
 import base.Localidad;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 import org.graphstream.graph.Graph;
 import resultados.ResultadoDFS;
 import visualizacion.VisualizadorUtils;
 
 /**
- * Implementa el algoritmo DFS (Depth-First Search) sobre un grafo lógico,
- * iniciando desde una localidad, y visualiza el recorrido en un grafo visual.
+ * Implementación recursiva del algoritmo DFS (Depth-First Search)
+ *
+
  *
  * @author Pedro, Christopher y Katia
  */
 public class DFS {
 
+    private static Map<Localidad, Localidad> predecesores;
+    private static Set<Localidad> visitados;
+    private static Graph grafoVisual;
+
     /**
-     * Ejecuta DFS sobre un grafo lógico y lo representa visualmente.
+     * Ejecuta DFS sobre el grafo y pinta el recorrido.
      *
-     * @param grafo Grafo lógico con localidades y carreteras.
-     * @param origen Localidad inicial desde donde parte el DFS.
-     * @param grafoVisual Grafo de GraphStream para mostrar el recorrido.
-     * @return ResultadoDFS con predecesores y orden de visita.
+     * @param grafo Grafo lógico.
+     * @param origen Nodo de inicio.
+     * @param visual Grafo visual.
+     * @return Resultado con predecesores.
      */
-    public static ResultadoDFS ejecutar(Grafo grafo, Localidad origen, Graph grafoVisual) {
-        Map<Localidad, Localidad> predecesores = new LinkedHashMap<>();
-        Set<Localidad> visitados = new HashSet<>();
-        Stack<Localidad> pila = new Stack<>();
+    
 
-        pila.push(origen);
-        visitados.add(origen);
+    public static ResultadoDFS ejecutar(Grafo grafo, Graph visual) {
+        visitados = new HashSet<>();
+        predecesores = new LinkedHashMap<>();
+        grafoVisual = visual;
 
-        System.out.println("Inicio en: " + origen.getNombre());
-        VisualizadorUtils.pintarNodo(grafoVisual, origen.getNombre(), "visitado");
-
-        while (!pila.isEmpty()) {
-            Localidad actual = pila.pop();
-            System.out.println("Procesando: " + actual.getNombre());
-
-            for (Localidad vecino : grafo.obtenerVecinos(actual)) {
-                if (!visitados.contains(vecino)) {
-                    predecesores.put(vecino, actual);
-                    visitados.add(vecino);
-                    pila.push(vecino);
-
-                    System.out.println("Descubierto: " + vecino.getNombre() + " desde " + actual.getNombre());
-                    VisualizadorUtils.pintarNodo(grafoVisual, vecino.getNombre(), "visitado");
-                    VisualizadorUtils.pintarArista(grafoVisual, actual.getNombre(), vecino.getNombre(), "seleccionada");
-
-                    try {
-                        Thread.sleep(500); // Pausa para animación
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-                }
+        // Visita cada componente del grafo
+        for (Localidad u : grafo.getLocalidades()) {
+            if (!visitados.contains(u)) {
+                dfsVisitar(grafo, u);
             }
         }
 
         return new ResultadoDFS(predecesores);
+    }
+
+    private static void dfsVisitar(Grafo grafo, Localidad u) {
+        visitados.add(u);
+        System.out.println("Procesando: " + u.getNombre());
+        VisualizadorUtils.pintarNodo(grafoVisual, u.getNombre(), "visitado");
+
+        for (Localidad v : grafo.obtenerVecinos(u)) {
+            if (!visitados.contains(v)) {
+                predecesores.put(v, u);
+                VisualizadorUtils.pintarArista(grafoVisual, u.getNombre(), v.getNombre(), "seleccionada");
+
+                try {
+                    Thread.sleep(500); // animación visual
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+
+                dfsVisitar(grafo, v);
+            }
+        }
     }
 }

@@ -247,14 +247,14 @@ public class Recorridos extends javax.swing.JFrame {
                     Thread.sleep(500);
 
                     // Ejecuta el algoritmo DFS con el grafo lógico, la localidad origen y el grafo visual.
-                    ResultadoDFS resultado2 = DFS.ejecutar(grafoLogico, origen, grafoVisual);
+                    ResultadoDFS resultado2 = DFS.ejecutar(grafoLogico, grafoVisual);
                     String texto = "=== Predecesores ===\n\n";
 
                     for (Map.Entry<Localidad, Localidad> entrada : resultado2.getPredecesores().entrySet()) {
                         texto += "Localidad: " + entrada.getKey().getNombre()
                                 + " <- Predecesor: " + entrada.getValue().getNombre() + "\n";
                     }
-                    JOptionPane.showMessageDialog(null, texto, "Resultado BFS", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, texto, "Resultado DFS", JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (InterruptedException e) {
                     // Maneja cualquier interrupción del hilo.
