@@ -29,7 +29,7 @@ public class Reportes extends javax.swing.JFrame {
         setSize(1080, 720);
         setTitle("Complejidad Temporal");
         
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JPanel panelContenido = new JPanel(new BorderLayout());
