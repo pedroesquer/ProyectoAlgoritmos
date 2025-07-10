@@ -56,16 +56,6 @@ public class VisualizadorUtils {
         }
     }
     
-//    public static void reiniciarGrafo(Graph graph) {
-//        if (graph.getNodeCount() == 0 || graph.getEdgeCount() == 0) return;
-//        for (Node n : graph) {
-//            n.setAttribute("ui.class", "");
-//        }
-//        for (Edge e : graph.getEdgeSet()) {
-//            e.setAttribute("ui.class", "");
-//        }
-//    }
-
 
     public static String getEstilosDefault() {
         return """

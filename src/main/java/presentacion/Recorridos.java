@@ -141,23 +141,18 @@ public class Recorridos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnBFSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBFSActionPerformed
-        // Reinicia el grafo visual para limpiar nodos, aristas y estilos anteriores.
         VisualizadorUtils.reiniciarGrafo(grafoVisual);
 
-        // Obtiene una lista de nombres de localidades, ordenada alfabéticamente.
         List<String> nombreLocalidades = grafoLogico.getLocalidades()
                 .stream()
-                .sorted(Comparator.comparing(Localidad::getNombre)) // Orden alfabético
-                .map(Localidad::getNombre) // Se transforma cada Localidad a su nombre
-                .toList(); // Convierte el stream a lista
+                .sorted(Comparator.comparing(Localidad::getNombre)) //
+                .map(Localidad::getNombre) 
+                .toList(); 
 
-        // Crea un JComboBox con los nombres de las localidades.
         JComboBox<String> comboOrigen = new JComboBox<>(nombreLocalidades.toArray(new String[0]));
 
-        // Selecciona la primera localidad como predeterminada.
         comboOrigen.setSelectedIndex(0);
 
-        // Muestra un cuadro de diálogo para que el usuario seleccione la localidad de origen para BFS.
         int resultado = JOptionPane.showConfirmDialog(
                 null,
                 comboOrigen,
@@ -166,33 +161,24 @@ public class Recorridos extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE
         );
 
-        // Si el usuario presiona "Aceptar"
         if (resultado == JOptionPane.OK_OPTION) {
-            // Actualiza la etiqueta para mostrar que se está ejecutando el algoritmo BFS.
             lblAlgoritmo.setText("Algoritmo en ejecución: BFS");
 
-            // Obtiene la localidad seleccionada desde el JComboBox.
             String ciudadInicio = (String) comboOrigen.getSelectedItem();
 
-            // Busca la Localidad correspondiente en el grafo lógico.
             Localidad origen = grafoLogico.getLocalidades().stream()
                     .filter(l -> l.getNombre().equals(ciudadInicio))
                     .findFirst()
                     .orElse(null); // Si no se encuentra, devuelve null
 
-            // Si se encontró la localidad origen
             if (origen != null) {
-                // Desactiva los botones para evitar múltiples ejecuciones simultáneas.
                 btnDFS.setEnabled(false);
                 btnBFS.setEnabled(false);
 
-                // Ejecuta el algoritmo en un hilo separado para no congelar la interfaz.
                 new Thread(() -> {
                     try {
-                        // Pausa breve antes de comenzar (opcional, para dar tiempo a la interfaz).
                         Thread.sleep(500);
 
-                        // Ejecuta el algoritmo BFS con la localidad origen y el grafo visual.
                         ResultadoBFS resultado2 = BFS.ejecutar(grafoLogico, origen, grafoVisual);
                         String texto = "=== Predecesores ===\n\n";
 
@@ -203,14 +189,12 @@ public class Recorridos extends javax.swing.JFrame {
 
                         JOptionPane.showMessageDialog(null, texto, "Resultado BFS", JOptionPane.INFORMATION_MESSAGE);
                     } catch (InterruptedException e) {
-                        // Manejo de excepción si el hilo es interrumpido.
                         e.printStackTrace();
                     } finally {
-                        // Vuelve a habilitar los botones en el hilo de la interfaz.
                         SwingUtilities.invokeLater(() -> btnDFS.setEnabled(true));
                         SwingUtilities.invokeLater(() -> btnBFS.setEnabled(true));
                     }
-                }).start(); // Inicia el hilo
+                }).start(); 
             }
 
         }
@@ -218,35 +202,26 @@ public class Recorridos extends javax.swing.JFrame {
      }//GEN-LAST:event_btnBFSActionPerformed
 
     private void btnDFSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDFSActionPerformed
-        // Reinicia el grafo visual eliminando nodos, aristas y estilos anteriores.
         VisualizadorUtils.reiniciarGrafo(grafoVisual);
 
-        // Define la ciudad de inicio del recorrido DFS.
         String ciudadInicio = "León";
 
-        // Actualiza la etiqueta para indicar qué algoritmo se está ejecutando.
         lblAlgoritmo.setText("Algoritmo en ejecución: DFS");
 
-        // Busca la localidad correspondiente al nombre especificado en el grafo lógico.
         Localidad origen = grafoLogico.getLocalidades()
                 .stream()
                 .filter(l -> l.getNombre().equals(ciudadInicio))
                 .findFirst()
-                .orElse(null); // Si no se encuentra, regresa null
+                .orElse(null); 
 
-        // Si se encontró la localidad origen
         if (origen != null) {
-            // Desactiva los botones de DFS y BFS para evitar múltiples ejecuciones simultáneas.
             btnDFS.setEnabled(false);
             btnBFS.setEnabled(false);
 
-            // Crea un nuevo hilo para ejecutar el algoritmo DFS sin bloquear la interfaz gráfica.
             new Thread(() -> {
                 try {
-                    // Espera medio segundo antes de iniciar (opcional, puede ser para dar margen de visualización).
                     Thread.sleep(500);
 
-                    // Ejecuta el algoritmo DFS con el grafo lógico, la localidad origen y el grafo visual.
                     ResultadoDFS resultado2 = DFS.ejecutar(grafoLogico, grafoVisual);
                     String texto = "=== Predecesores ===\n\n";
 
@@ -257,14 +232,12 @@ public class Recorridos extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, texto, "Resultado DFS", JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (InterruptedException e) {
-                    // Maneja cualquier interrupción del hilo.
                     e.printStackTrace();
                 } finally {
-                    // Reactiva los botones en el hilo de la interfaz gráfica una vez finalizada la ejecución.
                     SwingUtilities.invokeLater(() -> btnDFS.setEnabled(true));
                     SwingUtilities.invokeLater(() -> btnBFS.setEnabled(true));
                 }
-            }).start(); // Inicia el hilo
+            }).start();
         }
 
     }//GEN-LAST:event_btnDFSActionPerformed
